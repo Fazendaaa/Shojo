@@ -1,4 +1,4 @@
-<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️--><h1 align="center">Shojo</h1>
+<!-- ⚠️ This README has been generated from the file(s) "blueprint.md" ⚠️--><h1 align="center">Shōjō</h1>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Fazendaaa/Shojo/master/assets/img/logo.svg" alt="Logo" width="150" height="150" />
@@ -24,7 +24,7 @@
 <br />
 
 
-Welcome to Fazendaaa's Shojo. This is version 0.0.0!
+Welcome to Fazendaaa's Shōjō. This is version 0.0.0!
 
 Made with:
 
