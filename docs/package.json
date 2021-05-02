@@ -1,0 +1,36 @@
+{
+  "name": "Shojo",
+  "version": "0.0.0",
+  "description": "LaTex package manager",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fazendaaa/Shojo.git"
+  },
+  "keywords": [
+    "docker",
+    "go",
+    "package",
+    "manager"
+  ],
+  "author": "https://github.com/Fazendaaa/",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Fazendaaa/Shojo/issues"
+  },
+  "homepage": "https://github.com/Fazendaaa/Shojo#readme",
+  "contributors": [
+    {
+      "name": "Fazendaaa",
+      "url": "https://twitter.com/the_fznd",
+      "img": "https://avatars2.githubusercontent.com/u/12137236?s=460&u=75ec76d6f0c577de2ebfa4eae77cc4c4ad17ec06&v=4"
+    },
+    {
+      "name": "You?",
+      "img": "https://joeschmoe.io/api/v1/random",
+      "url": "https://github.com/andreasbm/web-config/blob/master/CONTRIBUTING.md"
+    }
+  ]
+}

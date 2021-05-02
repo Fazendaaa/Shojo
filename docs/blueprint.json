@@ -1,0 +1,54 @@
+{
+  "id": {
+    "github": "Fazendaaa/Shojo"
+  },
+  "checkLinks": true,
+  "line": "water",
+  "logo": {
+    "src": "https://raw.githubusercontent.com/Fazendaaa/Shojo/master/assets/img/logo.svg",
+    "height": "150",
+    "width": "150"
+  },
+  "badges": [
+    {
+      "alt": "Custom badge",
+      "url": "https://github.com/badges/shields",
+      "img": "https://img.shields.io/badge/custom-badge-f39f37.svg"
+    },
+    {
+      "alt": "Say Thanks!",
+      "url": "https://saythanks.io/to/lucas.carotta%40outlook.com",
+      "img": "https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg?longCache=true&style=for-the-badge"
+    },
+    {
+      "alt": "",
+      "url": "",
+      "img": ""
+    },
+    {
+      "alt": "",
+      "url": "",
+      "img": ""
+    },
+    {
+      "alt": "",
+      "url": "",
+      "img": ""
+    },
+    {
+      "alt": "",
+      "url": "",
+      "img": ""
+    },
+    {
+      "alt": "",
+      "url": "",
+      "img": ""
+    },
+    {
+      "alt": "",
+      "url": "",
+      "img": ""
+    }
+  ]
+}
