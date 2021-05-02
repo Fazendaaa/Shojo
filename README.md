@@ -1,0 +1,2 @@
+# Shojo
+LaTex package manager
