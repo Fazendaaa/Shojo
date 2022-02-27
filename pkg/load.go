@@ -12,7 +12,13 @@ func Load(projectPath string) (project Project, fail error) {
 		return project, fail
 	}
 
-	parsed, fail := parseProject(lexed.(Project))
+	casted, ok := lexed.(Project)
+
+	if !ok {
+		return project, fail
+	}
+
+	parsed, fail := parseProject(casted)
 
 	if nil != fail {
 		return parsed, fail

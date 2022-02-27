@@ -17,7 +17,7 @@ type Package struct {
 }
 
 type Project struct {
-	text       Tex
+	tex        Tex
 	tlmgr      TLMGR
 	repository Repository
 	packages   []Package

@@ -1,0 +1,11 @@
+repository: https://mirror.ctan.org/systems/texlive/tlnet
+packages:
+  - multirow
+  - wrapfig
+  - lastpage
+  - hyphenat
+  - hyphen-portuguese
+  - babel-portuges
+  - fancyhdr
+  - tabu
+  - varwidth

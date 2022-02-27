@@ -1,0 +1,10 @@
+packages:
+  - multirow
+  - wrapfig
+  - lastpage
+  - hyphenat
+  - hyphen-portuguese
+  - babel-portuges
+  - fancyhdr
+  - tabu
+  - varwidth
