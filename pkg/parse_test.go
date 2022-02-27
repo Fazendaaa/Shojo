@@ -37,7 +37,7 @@ func TestParse(t *testing.T) {
 		}
 	})
 
-	t.Run("integer ex Version", func(t *testing.T) {
+	t.Run("integer Tex Version", func(t *testing.T) {
 		lexed, _ := samael.LexProject("shojo", "../test/config/integerTexVersion/", projectFunc)
 		casted, _ := lexed.(Project)
 		value, fail := parseProject(casted)

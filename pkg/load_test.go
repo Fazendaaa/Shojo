@@ -110,6 +110,14 @@ func TestLoad(t *testing.T) {
 		}
 	})
 
+	t.Run("missing", func(t *testing.T) {
+		value, fail := Load("../test/config/missing/")
+
+		if nil == fail {
+			t.Errorf("Expected to got a invalid missing project error but got the following value:\n%v", value)
+		}
+	})
+
 	t.Run("named", func(t *testing.T) {
 		value, fail := Load("../test/config/named/foo.yml")
 		expected := Project{

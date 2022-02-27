@@ -53,6 +53,8 @@ github.com/Fazendaaa/Samael v0.0.0-20220226194644-8c3e4a5193e0 h1:JMU9hXD1OStLxv
 github.com/Fazendaaa/Samael v0.0.0-20220226194644-8c3e4a5193e0/go.mod h1:OKSacg5T2VKSqgey54mPG5wP1zxDTV5e1AooUCQ2puQ=
 github.com/Fazendaaa/Samael v0.0.0-20220226233035-94ab5208a995 h1:gteaTb6O3vNylTs51EL9G8/LqeRNTvt/fOReD03vVUA=
 github.com/Fazendaaa/Samael v0.0.0-20220226233035-94ab5208a995/go.mod h1:+hrT0+3k0JvSbhYEHvXh1xUsZEXoa+9zSk065a/jhV4=
+github.com/Fazendaaa/Samael v0.0.0-20220227122204-fdf7574fb349 h1:kIb5MgFu9gDN5qtgzOfaWo97gU3TtPvCZI71MXogUQE=
+github.com/Fazendaaa/Samael v0.0.0-20220227122204-fdf7574fb349/go.mod h1:+hrT0+3k0JvSbhYEHvXh1xUsZEXoa+9zSk065a/jhV4=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
 github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
