@@ -1,0 +1,12 @@
+tex:
+  version: 633
+packages:
+  - multirow
+  - wrapfig
+  - lastpage
+  - hyphenat
+  - hyphen-portuguese
+  - babel-portuges
+  - fancyhdr
+  - tabu
+  - varwidth

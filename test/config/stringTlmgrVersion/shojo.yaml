@@ -1,0 +1,12 @@
+tlmgr:
+  version: 6.14.01
+packages:
+  - multirow
+  - wrapfig
+  - lastpage
+  - hyphenat
+  - hyphen-portuguese
+  - babel-portuges
+  - fancyhdr
+  - tabu
+  - varwidth
