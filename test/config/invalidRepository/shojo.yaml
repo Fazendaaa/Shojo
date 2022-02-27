@@ -1,8 +1,4 @@
-tex:
-  version: 6.3.3
-tlmgr:
-  version: 61401
-repository: https://mirror.ctan.org/systems/texlive/tlnet/
+repository: mirror.not.exists
 packages:
   - multirow
   - wrapfig

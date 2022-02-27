@@ -1,5 +1,94 @@
 package shojo
 
+import (
+	"fmt"
+	"net/url"
+	"regexp"
+	"strings"
+)
+
+func checkTex(tex Tex) (_ Tex, fail error) {
+	digits := 3
+	version := strings.Split(tex.version, ".")
+
+	if 0 < len(tex.version) && digits != len(version) {
+		return tex, fmt.Errorf(`Tex version isn't valid, the version should be in
+the SemVer format, but the presented version has %d slices instead of %d`,
+			len(version), digits)
+	}
+
+	return tex, fail
+}
+
+func checkTlmgr(tlmgr TLMGR) (_ TLMGR, fail error) {
+	digits := 5
+	version := numberOfCharacters(tlmgr.version)
+
+	if 0 < len(tlmgr.version) && digits != version {
+		return tlmgr, fmt.Errorf(`TLMGR version isn't valid, the presented version
+has %d digits instead of %d`, version, digits)
+	}
+
+	return tlmgr, fail
+}
+
+// checkRepository https://stackoverflow.com/a/31480759/7092954
+func checkRepository(repository Repository) (_ Repository, fail error) {
+	if 0 == len(repository.url) {
+		return repository, fail
+	}
+
+	request, fail := url.ParseRequestURI(repository.url)
+
+	if nil != fail {
+		return repository, fmt.Errorf(`URL presented in repository isn't valid, the
+URL presented threw de following error %w:\n%s\n`, fail, request)
+	}
+
+	return repository, fail
+}
+
+// checkPackages verify whether or not all packages are
+// - without spaces
+// - all lower case
+// https://stackoverflow.com/a/14107337/7092954
+// https://gobyexample.com/regular-expressions
+func checkPackages(packages []Package) (_ []Package, fail error) {
+	regex, _ := regexp.Compile("^[a-z_-]+$")
+
+	for _, data := range packages {
+		if !regex.MatchString(data.name) {
+			return packages, fmt.Errorf("package name '%s' is not a valid one", data.name)
+		}
+	}
+
+	return packages, fail
+}
+
 func parseProject(origin Project) (project Project, fail error) {
+	project.tex, fail = checkTex(origin.tex)
+
+	if nil != fail {
+		return project, fmt.Errorf("%w;\ninvalid tex in project", fail)
+	}
+
+	project.tlmgr, fail = checkTlmgr(origin.tlmgr)
+
+	if nil != fail {
+		return project, fmt.Errorf("%w;\ninvalid TLMGR in project", fail)
+	}
+
+	project.repository, fail = checkRepository(origin.repository)
+
+	if nil != fail {
+		return project, fmt.Errorf("%w;\ninvalid repository in project", fail)
+	}
+
+	project.packages, fail = checkPackages(origin.packages)
+
+	if nil != fail {
+		return project, fmt.Errorf("%w;\ninvalid packages in project", fail)
+	}
+
 	return project, fail
 }

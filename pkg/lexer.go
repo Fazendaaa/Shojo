@@ -53,7 +53,19 @@ func repositoryToProject(origin map[interface{}]interface{}) (repository Reposit
 		repository.url, converted = origin["repository"].(string)
 	}
 	if !converted {
-		return repository, fmt.Errorf("repository definition presented and it's also malformed")
+		value, converted := origin["repository"].(map[interface{}]interface{})
+
+		if !converted {
+			return repository, fmt.Errorf("repository definition presented and it's also malformed")
+		}
+
+		if _, ok := value["url"]; ok {
+			repository.url, converted = value["url"].(string)
+
+			if !converted {
+				return repository, fmt.Errorf("repository url definition presented and it's also malformed")
+			}
+		}
 	}
 
 	return repository, fail

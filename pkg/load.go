@@ -1,6 +1,8 @@
 package shojo
 
 import (
+	"fmt"
+
 	samael "github.com/Fazendaaa/Samael/pkg"
 )
 
@@ -15,7 +17,7 @@ func Load(projectPath string) (project Project, fail error) {
 	casted, ok := lexed.(Project)
 
 	if !ok {
-		return project, fail
+		return project, fmt.Errorf("cannot normalize project")
 	}
 
 	parsed, fail := parseProject(casted)

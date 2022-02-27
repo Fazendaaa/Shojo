@@ -1,4 +1,4 @@
-repository: https://mirror.ctan.org/systems/texlive/tlnet
+repository: https://mirror.ctan.org/systems/texlive/tlnet/
 packages:
   - multirow
   - wrapfig

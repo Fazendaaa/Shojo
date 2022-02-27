@@ -71,6 +71,14 @@ func TestLex(t *testing.T) {
 		}
 	})
 
+	t.Run("repository URL", func(t *testing.T) {
+		value, fail := samael.LexProject("shojo", "../test/config/repositoryURL/", projectFunc)
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+	})
+
 	t.Run("string Tlmgr Version", func(t *testing.T) {
 		value, fail := samael.LexProject("shojo", "../test/config/stringTlmgrVersion/", projectFunc)
 
