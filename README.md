@@ -42,7 +42,7 @@ The main ideia is that you have a `shojo.yaml` like the following describing the
 
 ```yaml
 repository: https://mirror.ctan.org/systems/texlive/tlnet
-pacakges:
+packages:
   - multirow
   - wrapfig
   - lastpage

@@ -1,0 +1,13 @@
+dockerfile: build/package/Dockerfile
+
+objectives:
+  base:
+    run: go run ./cmd/shojo/main.go
+    test: go test --verbose
+    add: go get $$ARGV[0]
+    rm: go mod tidy
+
+  dev:
+    anal: gosec -fmt=sonarqujbe -out report.json ./..
+    linter: golangci-lint run
+    doc: go doc .
