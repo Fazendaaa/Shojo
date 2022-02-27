@@ -11,6 +11,10 @@ func semanticTlmgr(tlmgr TLMGR) (_ TLMGR, fail error) {
 }
 
 func semanticRepository(repository Repository) (_ Repository, fail error) {
+	if 0 == len(repository.url) {
+		return DEFAULT_REPOSITORY, fail
+	}
+
 	return repository, fail
 }
 

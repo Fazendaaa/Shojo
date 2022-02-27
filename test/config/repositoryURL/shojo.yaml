@@ -1,5 +1,5 @@
 repository:
-  url: https://mirror.ctan.org/systems/texlive/tlnet
+  url: https://mirror.ctan.org/systems/texlive/tlnet/
 packages:
   - multirow
   - wrapfig

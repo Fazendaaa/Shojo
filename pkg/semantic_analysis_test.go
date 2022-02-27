@@ -47,8 +47,8 @@ func TestSemanticAnalysis(t *testing.T) {
 		}
 	})
 
-	t.Run("replicate repository", func(t *testing.T) {
-		lexed, _ := samael.LexProject("shojo", "../test/config/replicateRepository/", projectFunc)
+	t.Run("replicate packages", func(t *testing.T) {
+		lexed, _ := samael.LexProject("shojo", "../test/config/replicatePackages/", projectFunc)
 		casted, _ := lexed.(Project)
 		value, fail := semanticAnalysis(casted)
 
