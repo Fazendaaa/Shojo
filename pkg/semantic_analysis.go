@@ -11,7 +11,7 @@ func semanticTlmgr(tlmgr TLMGR) (_ TLMGR, fail error) {
 }
 
 func semanticRepository(repository Repository) (_ Repository, fail error) {
-	if 0 == len(repository.url) {
+	if 0 == len(repository.URL) {
 		return DEFAULT_REPOSITORY, fail
 	}
 
@@ -33,25 +33,25 @@ func semanticPackages(packages []Package) (_ []Package, fail error) {
 // - adds missing variables not set by the user in their config file
 // It returns the sanitized version of the Project or the error related to it
 func semanticAnalysis(origin Project) (project Project, fail error) {
-	project.tex, fail = semanticTex(origin.tex)
+	project.Tex, fail = semanticTex(origin.Tex)
 
 	if nil != fail {
 		return project, fmt.Errorf("%w;\ninvalid tex semantic in project", fail)
 	}
 
-	project.tlmgr, fail = semanticTlmgr(origin.tlmgr)
+	project.TLMGR, fail = semanticTlmgr(origin.TLMGR)
 
 	if nil != fail {
 		return project, fmt.Errorf("%w;\ninvalid tlmgr semantic in project", fail)
 	}
 
-	project.repository, fail = semanticRepository(origin.repository)
+	project.Repository, fail = semanticRepository(origin.Repository)
 
 	if nil != fail {
 		return project, fmt.Errorf("%w;\ninvalid repository semantic in project", fail)
 	}
 
-	project.packages, fail = semanticPackages(origin.packages)
+	project.Packages, fail = semanticPackages(origin.Packages)
 
 	if nil != fail {
 		return project, fmt.Errorf("%w;\ninvalid packages semantic in project", fail)

@@ -9,42 +9,42 @@ func TestLoad(t *testing.T) {
 	t.Run("complete", func(t *testing.T) {
 		value, fail := Load("../test/config/complete/")
 		expected := Project{
-			tex: Tex{
-				version: "6.3.3",
+			Tex: Tex{
+				Version: "6.3.3",
 			},
-			tlmgr: TLMGR{
-				version: "61401",
+			TLMGR: TLMGR{
+				Version: "61401",
 			},
-			repository: Repository{
-				url: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			packages: []Package{
+			Packages: []Package{
 				{
-					name: "multirow",
+					Name: "multirow",
 				},
 				{
-					name: "wrapfig",
+					Name: "wrapfig",
 				},
 				{
-					name: "lastpage",
+					Name: "lastpage",
 				},
 				{
-					name: "hyphenat",
+					Name: "hyphenat",
 				},
 				{
-					name: "hyphen-portuguese",
+					Name: "hyphen-portuguese",
 				},
 				{
-					name: "babel-portuges",
+					Name: "babel-portuges",
 				},
 				{
-					name: "fancyhdr",
+					Name: "fancyhdr",
 				},
 				{
-					name: "tabu",
+					Name: "tabu",
 				},
 				{
-					name: "varwidth",
+					Name: "varwidth",
 				},
 			},
 		}
@@ -61,42 +61,42 @@ func TestLoad(t *testing.T) {
 	t.Run("default", func(t *testing.T) {
 		value, fail := Load("../test/config/default/")
 		expected := Project{
-			tex: Tex{
-				version: "",
+			Tex: Tex{
+				Version: "",
 			},
-			tlmgr: TLMGR{
-				version: "",
+			TLMGR: TLMGR{
+				Version: "",
 			},
-			repository: Repository{
-				url: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			packages: []Package{
+			Packages: []Package{
 				{
-					name: "multirow",
+					Name: "multirow",
 				},
 				{
-					name: "wrapfig",
+					Name: "wrapfig",
 				},
 				{
-					name: "lastpage",
+					Name: "lastpage",
 				},
 				{
-					name: "hyphenat",
+					Name: "hyphenat",
 				},
 				{
-					name: "hyphen-portuguese",
+					Name: "hyphen-portuguese",
 				},
 				{
-					name: "babel-portuges",
+					Name: "babel-portuges",
 				},
 				{
-					name: "fancyhdr",
+					Name: "fancyhdr",
 				},
 				{
-					name: "tabu",
+					Name: "tabu",
 				},
 				{
-					name: "varwidth",
+					Name: "varwidth",
 				},
 			},
 		}
@@ -121,42 +121,42 @@ func TestLoad(t *testing.T) {
 	t.Run("named", func(t *testing.T) {
 		value, fail := Load("../test/config/named/foo.yml")
 		expected := Project{
-			tex: Tex{
-				version: "",
+			Tex: Tex{
+				Version: "",
 			},
-			tlmgr: TLMGR{
-				version: "",
+			TLMGR: TLMGR{
+				Version: "",
 			},
-			repository: Repository{
-				url: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			packages: []Package{
+			Packages: []Package{
 				{
-					name: "multirow",
+					Name: "multirow",
 				},
 				{
-					name: "wrapfig",
+					Name: "wrapfig",
 				},
 				{
-					name: "lastpage",
+					Name: "lastpage",
 				},
 				{
-					name: "hyphenat",
+					Name: "hyphenat",
 				},
 				{
-					name: "hyphen-portuguese",
+					Name: "hyphen-portuguese",
 				},
 				{
-					name: "babel-portuges",
+					Name: "babel-portuges",
 				},
 				{
-					name: "fancyhdr",
+					Name: "fancyhdr",
 				},
 				{
-					name: "tabu",
+					Name: "tabu",
 				},
 				{
-					name: "varwidth",
+					Name: "varwidth",
 				},
 			},
 		}
@@ -173,42 +173,42 @@ func TestLoad(t *testing.T) {
 	t.Run("repository", func(t *testing.T) {
 		value, fail := Load("../test/config/repository/")
 		expected := Project{
-			tex: Tex{
-				version: "",
+			Tex: Tex{
+				Version: "",
 			},
-			tlmgr: TLMGR{
-				version: "",
+			TLMGR: TLMGR{
+				Version: "",
 			},
-			repository: Repository{
-				url: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			packages: []Package{
+			Packages: []Package{
 				{
-					name: "multirow",
+					Name: "multirow",
 				},
 				{
-					name: "wrapfig",
+					Name: "wrapfig",
 				},
 				{
-					name: "lastpage",
+					Name: "lastpage",
 				},
 				{
-					name: "hyphenat",
+					Name: "hyphenat",
 				},
 				{
-					name: "hyphen-portuguese",
+					Name: "hyphen-portuguese",
 				},
 				{
-					name: "babel-portuges",
+					Name: "babel-portuges",
 				},
 				{
-					name: "fancyhdr",
+					Name: "fancyhdr",
 				},
 				{
-					name: "tabu",
+					Name: "tabu",
 				},
 				{
-					name: "varwidth",
+					Name: "varwidth",
 				},
 			},
 		}
@@ -225,42 +225,42 @@ func TestLoad(t *testing.T) {
 	t.Run("repository URL", func(t *testing.T) {
 		value, fail := Load("../test/config/repositoryURL/")
 		expected := Project{
-			tex: Tex{
-				version: "",
+			Tex: Tex{
+				Version: "",
 			},
-			tlmgr: TLMGR{
-				version: "",
+			TLMGR: TLMGR{
+				Version: "",
 			},
-			repository: Repository{
-				url: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			packages: []Package{
+			Packages: []Package{
 				{
-					name: "multirow",
+					Name: "multirow",
 				},
 				{
-					name: "wrapfig",
+					Name: "wrapfig",
 				},
 				{
-					name: "lastpage",
+					Name: "lastpage",
 				},
 				{
-					name: "hyphenat",
+					Name: "hyphenat",
 				},
 				{
-					name: "hyphen-portuguese",
+					Name: "hyphen-portuguese",
 				},
 				{
-					name: "babel-portuges",
+					Name: "babel-portuges",
 				},
 				{
-					name: "fancyhdr",
+					Name: "fancyhdr",
 				},
 				{
-					name: "tabu",
+					Name: "tabu",
 				},
 				{
-					name: "varwidth",
+					Name: "varwidth",
 				},
 			},
 		}
@@ -277,42 +277,42 @@ func TestLoad(t *testing.T) {
 	t.Run("tex", func(t *testing.T) {
 		value, fail := Load("../test/config/tex/")
 		expected := Project{
-			tex: Tex{
-				version: "6.3.3",
+			Tex: Tex{
+				Version: "6.3.3",
 			},
-			tlmgr: TLMGR{
-				version: "",
+			TLMGR: TLMGR{
+				Version: "",
 			},
-			repository: Repository{
-				url: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			packages: []Package{
+			Packages: []Package{
 				{
-					name: "multirow",
+					Name: "multirow",
 				},
 				{
-					name: "wrapfig",
+					Name: "wrapfig",
 				},
 				{
-					name: "lastpage",
+					Name: "lastpage",
 				},
 				{
-					name: "hyphenat",
+					Name: "hyphenat",
 				},
 				{
-					name: "hyphen-portuguese",
+					Name: "hyphen-portuguese",
 				},
 				{
-					name: "babel-portuges",
+					Name: "babel-portuges",
 				},
 				{
-					name: "fancyhdr",
+					Name: "fancyhdr",
 				},
 				{
-					name: "tabu",
+					Name: "tabu",
 				},
 				{
-					name: "varwidth",
+					Name: "varwidth",
 				},
 			},
 		}
@@ -329,42 +329,42 @@ func TestLoad(t *testing.T) {
 	t.Run("tlmgr", func(t *testing.T) {
 		value, fail := Load("../test/config/tlmgr/")
 		expected := Project{
-			tex: Tex{
-				version: "",
+			Tex: Tex{
+				Version: "",
 			},
-			tlmgr: TLMGR{
-				version: "61401",
+			TLMGR: TLMGR{
+				Version: "61401",
 			},
-			repository: Repository{
-				url: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			packages: []Package{
+			Packages: []Package{
 				{
-					name: "multirow",
+					Name: "multirow",
 				},
 				{
-					name: "wrapfig",
+					Name: "wrapfig",
 				},
 				{
-					name: "lastpage",
+					Name: "lastpage",
 				},
 				{
-					name: "hyphenat",
+					Name: "hyphenat",
 				},
 				{
-					name: "hyphen-portuguese",
+					Name: "hyphen-portuguese",
 				},
 				{
-					name: "babel-portuges",
+					Name: "babel-portuges",
 				},
 				{
-					name: "fancyhdr",
+					Name: "fancyhdr",
 				},
 				{
-					name: "tabu",
+					Name: "tabu",
 				},
 				{
-					name: "varwidth",
+					Name: "varwidth",
 				},
 			},
 		}
@@ -381,42 +381,42 @@ func TestLoad(t *testing.T) {
 	t.Run("yml", func(t *testing.T) {
 		value, fail := Load("../test/config/yml/")
 		expected := Project{
-			tex: Tex{
-				version: "",
+			Tex: Tex{
+				Version: "",
 			},
-			tlmgr: TLMGR{
-				version: "",
+			TLMGR: TLMGR{
+				Version: "",
 			},
-			repository: Repository{
-				url: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			packages: []Package{
+			Packages: []Package{
 				{
-					name: "multirow",
+					Name: "multirow",
 				},
 				{
-					name: "wrapfig",
+					Name: "wrapfig",
 				},
 				{
-					name: "lastpage",
+					Name: "lastpage",
 				},
 				{
-					name: "hyphenat",
+					Name: "hyphenat",
 				},
 				{
-					name: "hyphen-portuguese",
+					Name: "hyphen-portuguese",
 				},
 				{
-					name: "babel-portuges",
+					Name: "babel-portuges",
 				},
 				{
-					name: "fancyhdr",
+					Name: "fancyhdr",
 				},
 				{
-					name: "tabu",
+					Name: "tabu",
 				},
 				{
-					name: "varwidth",
+					Name: "varwidth",
 				},
 			},
 		}

@@ -14,11 +14,11 @@ func texToProject(origin map[interface{}]interface{}) (tex Tex, fail error) {
 			return tex, fmt.Errorf("Tex definition presented and it's also malformed")
 		}
 
-		tex.version, converted = result["version"].(string)
+		tex.Version, converted = result["version"].(string)
 
 		if !converted {
 			return tex, fmt.Errorf(`Tex version definition presented and it's also
-malformed, expected 'string' and got '%s'`, reflect.TypeOf(tex.version))
+malformed, expected 'string' and got '%s'`, reflect.TypeOf(tex.Version))
 		}
 	}
 
@@ -40,7 +40,7 @@ func tlmgrToProject(origin map[interface{}]interface{}) (tlmgr TLMGR, fail error
 also malformed, expected 'string' and got '%s'`, reflect.TypeOf(version))
 		}
 
-		tlmgr.version = strconv.Itoa(version)
+		tlmgr.Version = strconv.Itoa(version)
 	}
 
 	return tlmgr, fail
@@ -50,7 +50,7 @@ func repositoryToProject(origin map[interface{}]interface{}) (repository Reposit
 	var converted bool = true
 
 	if _, ok := origin["repository"]; ok {
-		repository.url, converted = origin["repository"].(string)
+		repository.URL, converted = origin["repository"].(string)
 	}
 	if !converted {
 		value, converted := origin["repository"].(map[interface{}]interface{})
@@ -60,7 +60,7 @@ func repositoryToProject(origin map[interface{}]interface{}) (repository Reposit
 		}
 
 		if _, ok := value["url"]; ok {
-			repository.url, converted = value["url"].(string)
+			repository.URL, converted = value["url"].(string)
 
 			if !converted {
 				return repository, fmt.Errorf("repository url definition presented and it's also malformed")
@@ -78,7 +78,7 @@ func interfaceToPackage(origin interface{}) (result Package, fail error) {
 		return result, fmt.Errorf("Package definition is not a string")
 	}
 
-	result.name = read
+	result.Name = read
 
 	return result, fail
 }
@@ -109,25 +109,25 @@ func packagesToProject(origin map[interface{}]interface{}) (packages []Package, 
 // wrong; like a package name with some typo
 func projectFunc(origin map[interface{}]interface{}) (_ interface{}, fail error) {
 	result := Project{}
-	result.tex, fail = texToProject(origin)
+	result.Tex, fail = texToProject(origin)
 
 	if nil != fail {
 		return result, fmt.Errorf("%w;\nmalformed tex definition", fail)
 	}
 
-	result.tlmgr, fail = tlmgrToProject(origin)
+	result.TLMGR, fail = tlmgrToProject(origin)
 
 	if nil != fail {
 		return result, fmt.Errorf("%w;\nmalformed tlmgr definition", fail)
 	}
 
-	result.repository, fail = repositoryToProject(origin)
+	result.Repository, fail = repositoryToProject(origin)
 
 	if nil != fail {
 		return result, fmt.Errorf("%w;\nmalformed repository definition", fail)
 	}
 
-	result.packages, fail = packagesToProject(origin)
+	result.Packages, fail = packagesToProject(origin)
 
 	if nil != fail {
 		return result, fmt.Errorf("%w;\nmalformed packages definition", fail)

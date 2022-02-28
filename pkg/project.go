@@ -8,35 +8,35 @@ import (
 )
 
 type Tex struct {
-	version string `yaml:"version"`
+	Version string `yaml:"version"`
 }
 
 type TLMGR struct {
-	version string `yaml:"version"`
+	Version string `yaml:"version"`
 }
 
 type Repository struct {
-	url string `yaml:"url"`
+	URL string `yaml:"url"`
 }
 
 type Package struct {
-	name string `yaml:"name"`
+	Name string `yaml:"name"`
 }
 
 type Project struct {
-	tex        Tex        `yaml:"tex"`
-	tlmgr      TLMGR      `yaml:"tlmgr"`
-	repository Repository `yaml:"repository"`
-	packages   []Package  `yaml:"packages"`
+	Tex        Tex        `yaml:"tex"`
+	TLMGR      TLMGR      `yaml:"tlmgr"`
+	Repository Repository `yaml:"repository"`
+	Packages   []Package  `yaml:"packages"`
 }
 
 func CreateProject(projectPath string) (fail error) {
 	yamlData, fail := yaml.Marshal(&Project{
-		tex: Tex{
-			version: "",
+		Tex: Tex{
+			Version: "",
 		},
-		tlmgr: TLMGR{
-			version: "",
+		TLMGR: TLMGR{
+			Version: "",
 		},
 	})
 
