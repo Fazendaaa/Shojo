@@ -2,12 +2,20 @@ package shojo
 
 import "regexp"
 
+type TLMGR struct {
+	Version string `yaml:"version"`
+}
+
 func tlmgr(subcommand string, paramters []string) (result string, fail error) {
 	return shell("tlmgr", append([]string{subcommand}, paramters...))
 }
 
-func InstallPackage(packageName string) (result string, fail error) {
+func installPackage(packageName string) (result string, fail error) {
 	return tlmgr("install", []string{packageName})
+}
+
+func removePackage(packageName string) (result string, fail error) {
+	return tlmgr("remove", []string{"--force", packageName})
 }
 
 func tlmgrVersion() (version string, fail error) {

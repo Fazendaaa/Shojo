@@ -66,6 +66,7 @@ func checkPackages(packages []Package) (_ []Package, fail error) {
 }
 
 func parseProject(origin Project) (project Project, fail error) {
+	project.filename = origin.filename
 	project.Tex, fail = checkTex(origin.Tex)
 
 	if nil != fail {

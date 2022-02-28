@@ -130,7 +130,7 @@ func packagesToProject(origin map[interface{}]interface{}) (packages []Package, 
 		packages[index], fail = interfaceToPackage(data)
 
 		if nil != fail {
-			return packages, fmt.Errorf("%w;\nmalformed packages definition", fail)
+			return packages, fmt.Errorf("%w;\nmalformed package '%s' definition", fail, data)
 		}
 	}
 
@@ -141,8 +141,13 @@ func packagesToProject(origin map[interface{}]interface{}) (packages []Package, 
 // checking whether or not the whole file structure seems right -- it doesn't
 // check whether or not it's right for execution, many values could be set as
 // wrong; like a package name with some typo
-func projectFunc(origin map[interface{}]interface{}) (_ interface{}, fail error) {
-	result := Project{}
+func projectFunc(filename string,
+	origin map[interface{}]interface{}) (
+	_ interface{},
+	fail error) {
+	result := Project{
+		filename: filename,
+	}
 	result.Tex, fail = texToProject(origin)
 
 	if nil != fail {

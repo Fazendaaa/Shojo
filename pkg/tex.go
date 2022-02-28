@@ -4,6 +4,10 @@ import (
 	"regexp"
 )
 
+type Tex struct {
+	Version string `yaml:"version"`
+}
+
 func tex(subcommand string, paramters []string) (result string, fail error) {
 	return shell("tex", append([]string{subcommand}, paramters...))
 }

@@ -9,12 +9,13 @@ var rmCmd = &cobra.Command{
 	Use:   "rm [projects' path]",
 	Short: "Removes a LaTex package to the current project",
 	Long:  ``,
-	Args:  cobra.MinimumNArgs(1),
+	Args:  validateProjectPath,
 	Run: func(cmd *cobra.Command, params []string) {
-		controllers.RmPackages(params)
+		controllers.RmPackages(params, projectPath)
 	},
 }
 
 func init() {
+	rmCmd.Flags().StringVarP(&projectPath, "project path", "p", "", "optional shojo.yaml path to remove package from")
 	rootCmd.AddCommand(rmCmd)
 }

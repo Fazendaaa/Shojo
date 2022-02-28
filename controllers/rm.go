@@ -2,23 +2,22 @@ package controllers
 
 import (
 	"fmt"
-	"os"
 
 	shojo "github.com/Fazendaaa/Shojo/pkg"
 )
 
-func RmPackages(packages []string) {
-	path, fail := os.Getwd()
+func RmPackages(packages []string, path string) {
+	for _, packageName := range packages {
+		result, pkgFail := shojo.RmFromProject(path, packageName)
 
-	if nil != fail {
-		fmt.Printf("%v;\ncould not read current directory", fail)
-	}
+		if nil != pkgFail {
+			fmt.Printf(`%v;
+error while installing package '%s';
+halted execution
+`, pkgFail, packageName)
+			break
+		}
 
-	project, fail := shojo.Load(path)
-
-	fmt.Println(project)
-
-	if nil != fail {
-		fmt.Printf("%v;\nmalformed tex definition", fail)
+		fmt.Println(result)
 	}
 }

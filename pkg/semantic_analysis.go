@@ -33,6 +33,7 @@ func semanticPackages(packages []Package) (_ []Package, fail error) {
 // - adds missing variables not set by the user in their config file
 // It returns the sanitized version of the Project or the error related to it
 func semanticAnalysis(origin Project) (project Project, fail error) {
+	project.filename = origin.filename
 	project.Tex, fail = semanticTex(origin.Tex)
 
 	if nil != fail {

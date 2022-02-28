@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-func TestLoad(t *testing.T) {
+func Testload(t *testing.T) {
 	t.Run("complete", func(t *testing.T) {
-		value, fail := Load("../test/config/complete/")
+		value, fail := load("../test/config/complete/")
 		expected := Project{
 			Tex: Tex{
 				Version: "3.141592653",
@@ -59,7 +59,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("default", func(t *testing.T) {
-		value, fail := Load("../test/config/default/")
+		value, fail := load("../test/config/default/")
 		expected := Project{
 			Tex: Tex{
 				Version: "",
@@ -111,7 +111,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("init", func(t *testing.T) {
-		value, fail := Load("../test/config/init/")
+		value, fail := load("../test/config/init/")
 		expected := Project{
 			Tex: Tex{
 				Version: "3.141592653",
@@ -135,7 +135,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("missing", func(t *testing.T) {
-		value, fail := Load("../test/config/missing/")
+		value, fail := load("../test/config/missing/")
 
 		if nil == fail {
 			t.Errorf("Expected to got a invalid missing project error but got the following value:\n%v", value)
@@ -143,7 +143,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("named", func(t *testing.T) {
-		value, fail := Load("../test/config/named/foo.yml")
+		value, fail := load("../test/config/named/foo.yml")
 		expected := Project{
 			Tex: Tex{
 				Version: "",
@@ -195,7 +195,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("repository", func(t *testing.T) {
-		value, fail := Load("../test/config/repository/")
+		value, fail := load("../test/config/repository/")
 		expected := Project{
 			Tex: Tex{
 				Version: "",
@@ -247,7 +247,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("repository URL", func(t *testing.T) {
-		value, fail := Load("../test/config/repositoryURL/")
+		value, fail := load("../test/config/repositoryURL/")
 		expected := Project{
 			Tex: Tex{
 				Version: "",
@@ -299,7 +299,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("tex", func(t *testing.T) {
-		value, fail := Load("../test/config/tex/")
+		value, fail := load("../test/config/tex/")
 		expected := Project{
 			Tex: Tex{
 				Version: "3.141592653",
@@ -351,7 +351,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("tex Version", func(t *testing.T) {
-		value, fail := Load("../test/config/texVersion/")
+		value, fail := load("../test/config/texVersion/")
 		expected := Project{
 			Tex: Tex{
 				Version: "3.141592653",
@@ -403,7 +403,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("tlmgr", func(t *testing.T) {
-		value, fail := Load("../test/config/tlmgr/")
+		value, fail := load("../test/config/tlmgr/")
 		expected := Project{
 			Tex: Tex{
 				Version: "",
@@ -455,7 +455,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("tlmgr Version", func(t *testing.T) {
-		value, fail := Load("../test/config/tlmgrVersion/")
+		value, fail := load("../test/config/tlmgrVersion/")
 		expected := Project{
 			Tex: Tex{
 				Version: "",
@@ -507,7 +507,7 @@ func TestLoad(t *testing.T) {
 	})
 
 	t.Run("yml", func(t *testing.T) {
-		value, fail := Load("../test/config/yml/")
+		value, fail := load("../test/config/yml/")
 		expected := Project{
 			Tex: Tex{
 				Version: "",

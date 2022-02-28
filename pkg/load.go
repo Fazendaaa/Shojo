@@ -6,8 +6,8 @@ import (
 	samael "github.com/Fazendaaa/Samael/pkg"
 )
 
-// Load
-func Load(projectPath string) (project Project, fail error) {
+// load
+func load(projectPath string) (project Project, fail error) {
 	lexed, fail := samael.LexProject("shojo", projectPath, projectFunc)
 
 	if nil != fail {
