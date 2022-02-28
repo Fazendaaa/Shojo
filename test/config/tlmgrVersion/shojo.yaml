@@ -1,4 +1,5 @@
-tlmgr: 61401
+tlmgr:
+  version: 61401
 packages:
   - multirow
   - wrapfig

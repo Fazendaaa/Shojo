@@ -95,5 +95,6 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 ## References
 
 - [tlmgr - the native TeX Live Manager](https://www.tug.org/texlive/doc/tlmgr.html)
+- [Go YAML](https://zetcode.com/golang/yaml/)
 
 {{ template:license }}

@@ -326,8 +326,112 @@ func TestLoad(t *testing.T) {
 		}
 	})
 
+	t.Run("tex Version", func(t *testing.T) {
+		value, fail := Load("../test/config/texVersion/")
+		expected := Project{
+			Tex: Tex{
+				Version: "6.3.3",
+			},
+			TLMGR: TLMGR{
+				Version: "",
+			},
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			},
+			Packages: []Package{
+				{
+					Name: "multirow",
+				},
+				{
+					Name: "wrapfig",
+				},
+				{
+					Name: "lastpage",
+				},
+				{
+					Name: "hyphenat",
+				},
+				{
+					Name: "hyphen-portuguese",
+				},
+				{
+					Name: "babel-portuges",
+				},
+				{
+					Name: "fancyhdr",
+				},
+				{
+					Name: "tabu",
+				},
+				{
+					Name: "varwidth",
+				},
+			},
+		}
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+
+		if !reflect.DeepEqual(expected, value) {
+			t.Errorf("got mismatching configurations:\n%#v\n\n%#v", expected, value)
+		}
+	})
+
 	t.Run("tlmgr", func(t *testing.T) {
 		value, fail := Load("../test/config/tlmgr/")
+		expected := Project{
+			Tex: Tex{
+				Version: "",
+			},
+			TLMGR: TLMGR{
+				Version: "61401",
+			},
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			},
+			Packages: []Package{
+				{
+					Name: "multirow",
+				},
+				{
+					Name: "wrapfig",
+				},
+				{
+					Name: "lastpage",
+				},
+				{
+					Name: "hyphenat",
+				},
+				{
+					Name: "hyphen-portuguese",
+				},
+				{
+					Name: "babel-portuges",
+				},
+				{
+					Name: "fancyhdr",
+				},
+				{
+					Name: "tabu",
+				},
+				{
+					Name: "varwidth",
+				},
+			},
+		}
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+
+		if !reflect.DeepEqual(expected, value) {
+			t.Errorf("got mismatching configurations:\n%#v\n\n%#v", expected, value)
+		}
+	})
+
+	t.Run("tlmgr Version", func(t *testing.T) {
+		value, fail := Load("../test/config/tlmgrVersion/")
 		expected := Project{
 			Tex: Tex{
 				Version: "",

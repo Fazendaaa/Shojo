@@ -42,7 +42,7 @@ The main ideia is that you have a `shojo.yaml` like the following describing the
 
 ```yaml
 repository: https://mirror.ctan.org/systems/texlive/tlnet
-packages:
+pacakges:
   - multirow
   - wrapfig
   - lastpage
@@ -146,6 +146,7 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 ## ➤ References
 
 - [tlmgr - the native TeX Live Manager](https://www.tug.org/texlive/doc/tlmgr.html)
+- [Go YAML](https://zetcode.com/golang/yaml/)
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#license)

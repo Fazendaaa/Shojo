@@ -107,8 +107,28 @@ func TestParse(t *testing.T) {
 		}
 	})
 
+	t.Run("tex version", func(t *testing.T) {
+		lexed, _ := samael.LexProject("shojo", "../test/config/texVersion/", projectFunc)
+		casted, _ := lexed.(Project)
+		value, fail := parseProject(casted)
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+	})
+
 	t.Run("tlmgr", func(t *testing.T) {
 		lexed, _ := samael.LexProject("shojo", "../test/config/tlmgr/", projectFunc)
+		casted, _ := lexed.(Project)
+		value, fail := parseProject(casted)
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+	})
+
+	t.Run("tlmgr version", func(t *testing.T) {
+		lexed, _ := samael.LexProject("shojo", "../test/config/tlmgrVersion/", projectFunc)
 		casted, _ := lexed.(Project)
 		value, fail := parseProject(casted)
 

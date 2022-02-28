@@ -31,13 +31,26 @@ type Project struct {
 }
 
 func CreateProject(projectPath string) (fail error) {
+	tlmgrVersion, fail := tlmgrVersion()
+
+	if nil != fail {
+		tlmgrVersion = ""
+	}
+
+	texVersion, fail := texVersion()
+
+	if nil != fail {
+		texVersion = ""
+	}
+
 	yamlData, fail := yaml.Marshal(&Project{
 		Tex: Tex{
-			Version: "",
+			Version: texVersion,
 		},
 		TLMGR: TLMGR{
-			Version: "",
+			Version: tlmgrVersion,
 		},
+		Repository: DEFAULT_REPOSITORY,
 	})
 
 	if nil != fail {

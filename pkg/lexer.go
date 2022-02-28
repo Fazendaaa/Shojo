@@ -7,14 +7,19 @@ import (
 )
 
 func texToProject(origin map[interface{}]interface{}) (tex Tex, fail error) {
+	var converted bool = true
+
 	if _, ok := origin["tex"]; ok {
-		result, converted := origin["tex"].(map[interface{}]interface{})
+		tex.Version, converted = origin["tex"].(string)
+	}
+	if !converted {
+		value, converted := origin["tex"].(map[string]interface{})
 
 		if !converted {
 			return tex, fmt.Errorf("Tex definition presented and it's also malformed")
 		}
 
-		tex.Version, converted = result["version"].(string)
+		tex.Version, converted = value["version"].(string)
 
 		if !converted {
 			return tex, fmt.Errorf(`Tex version definition presented and it's also
@@ -26,8 +31,18 @@ malformed, expected 'string' and got '%s'`, reflect.TypeOf(tex.Version))
 }
 
 func tlmgrToProject(origin map[interface{}]interface{}) (tlmgr TLMGR, fail error) {
+	var value int = 0
+	var converted bool = true
+
 	if _, ok := origin["tlmgr"]; ok {
-		result, converted := origin["tlmgr"].(map[interface{}]interface{})
+		value, converted = origin["tlmgr"].(int)
+
+		if converted {
+			tlmgr.Version = strconv.Itoa(value)
+		}
+	}
+	if !converted {
+		result, converted := origin["tlmgr"].(map[string]interface{})
 
 		if !converted {
 			return tlmgr, fmt.Errorf("TLMGR definition presented and it's also malformed")
@@ -53,7 +68,7 @@ func repositoryToProject(origin map[interface{}]interface{}) (repository Reposit
 		repository.URL, converted = origin["repository"].(string)
 	}
 	if !converted {
-		value, converted := origin["repository"].(map[interface{}]interface{})
+		value, converted := origin["repository"].(map[string]interface{})
 
 		if !converted {
 			return repository, fmt.Errorf("repository definition presented and it's also malformed")
