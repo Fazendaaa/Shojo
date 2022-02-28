@@ -8,22 +8,39 @@ import (
 
 func texToProject(origin map[interface{}]interface{}) (tex Tex, fail error) {
 	var converted bool = true
+	var value map[string]interface{}
 
 	if _, ok := origin["tex"]; ok {
 		tex.Version, converted = origin["tex"].(string)
 	}
 	if !converted {
-		value, converted := origin["tex"].(map[string]interface{})
+		switch origin["tex"].(type) {
+		default:
+			value, converted = origin["tex"].(map[string]interface{})
+		case float64:
+			tex.Version = strconv.FormatFloat(origin["tex"].(float64), 'f', -1, 64)
+
+			return tex, fail
+		}
 
 		if !converted {
 			return tex, fmt.Errorf("Tex definition presented and it's also malformed")
 		}
 
-		tex.Version, converted = value["version"].(string)
+		switch value["version"].(type) {
+		default:
+			return tex, fmt.Errorf(`TLMGR version definition presented and it's also
+	malformed, expected 'string' and got '%s'`, reflect.TypeOf(value["version"]))
+		case string:
+			tex.Version, converted = value["version"].(string)
+		case float64:
+			tex.Version = strconv.FormatFloat(value["version"].(float64), 'f', -1, 64)
+		}
 
 		if !converted {
-			return tex, fmt.Errorf(`Tex version definition presented and it's also
-malformed, expected 'string' and got '%s'`, reflect.TypeOf(tex.Version))
+			return tex, fmt.Errorf(`TLMGR version definition presented and it's also
+malformed type during conversion, got unexpected '%s' type`,
+				reflect.TypeOf(value["version"]))
 		}
 	}
 
@@ -48,14 +65,15 @@ func tlmgrToProject(origin map[interface{}]interface{}) (tlmgr TLMGR, fail error
 			return tlmgr, fmt.Errorf("TLMGR definition presented and it's also malformed")
 		}
 
-		version, converted := result["version"].(int)
-
-		if !converted {
-			return tlmgr, fmt.Errorf(`TLMGR version definition presented and it's
-also malformed, expected 'string' and got '%s'`, reflect.TypeOf(version))
+		switch result["version"].(type) {
+		default:
+			return tlmgr, fmt.Errorf(`TLMGR version definition presented and it's also
+	malformed, expected 'string' and got '%s'`, reflect.TypeOf(result["version"]))
+		case string:
+			tlmgr.Version, _ = result["version"].(string)
+		case int:
+			tlmgr.Version = strconv.Itoa(result["version"].(int))
 		}
-
-		tlmgr.Version = strconv.Itoa(version)
 	}
 
 	return tlmgr, fail
@@ -74,12 +92,13 @@ func repositoryToProject(origin map[interface{}]interface{}) (repository Reposit
 			return repository, fmt.Errorf("repository definition presented and it's also malformed")
 		}
 
-		if _, ok := value["url"]; ok {
-			repository.URL, converted = value["url"].(string)
+		_, ok := value["url"]
 
-			if !converted {
-				return repository, fmt.Errorf("repository url definition presented and it's also malformed")
-			}
+		if ok {
+			repository.URL, converted = value["url"].(string)
+		}
+		if !converted || !ok {
+			return repository, fmt.Errorf("repository url definition presented and it's also malformed")
 		}
 	}
 

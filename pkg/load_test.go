@@ -10,7 +10,7 @@ func TestLoad(t *testing.T) {
 		value, fail := Load("../test/config/complete/")
 		expected := Project{
 			Tex: Tex{
-				Version: "6.3.3",
+				Version: "3.141592653",
 			},
 			TLMGR: TLMGR{
 				Version: "61401",
@@ -99,6 +99,30 @@ func TestLoad(t *testing.T) {
 					Name: "varwidth",
 				},
 			},
+		}
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+
+		if !reflect.DeepEqual(expected, value) {
+			t.Errorf("got mismatching configurations:\n%#v\n\n%#v", expected, value)
+		}
+	})
+
+	t.Run("init", func(t *testing.T) {
+		value, fail := Load("../test/config/init/")
+		expected := Project{
+			Tex: Tex{
+				Version: "3.141592653",
+			},
+			TLMGR: TLMGR{
+				Version: "",
+			},
+			Repository: Repository{
+				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
+			},
+			Packages: []Package{},
 		}
 
 		if nil != fail {
@@ -278,7 +302,7 @@ func TestLoad(t *testing.T) {
 		value, fail := Load("../test/config/tex/")
 		expected := Project{
 			Tex: Tex{
-				Version: "6.3.3",
+				Version: "3.141592653",
 			},
 			TLMGR: TLMGR{
 				Version: "",
@@ -330,7 +354,7 @@ func TestLoad(t *testing.T) {
 		value, fail := Load("../test/config/texVersion/")
 		expected := Project{
 			Tex: Tex{
-				Version: "6.3.3",
+				Version: "3.141592653",
 			},
 			TLMGR: TLMGR{
 				Version: "",

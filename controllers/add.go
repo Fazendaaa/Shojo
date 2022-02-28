@@ -14,9 +14,11 @@ func AddPackage(packages []string) {
 		fmt.Errorf("%w;\ncould not read current directory", fail)
 	}
 
-	_, fail = shojo.Load(path)
+	project, fail := shojo.Load(path)
 
 	if nil != fail {
 		fmt.Errorf("%w;\nmalformed tex definition", fail)
 	}
+
+	fmt.Println(project)
 }

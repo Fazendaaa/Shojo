@@ -1,5 +1,5 @@
 tex:
-  version: 6.3.3
+  version: 3.141592653
 tlmgr:
   version: 61401
 repository: https://mirror.ctan.org/systems/texlive/tlnet/

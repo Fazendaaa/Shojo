@@ -23,6 +23,14 @@ func TestLex(t *testing.T) {
 		}
 	})
 
+	t.Run("init", func(t *testing.T) {
+		value, fail := samael.LexProject("shojo", "../test/config/init/", projectFunc)
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+	})
+
 	t.Run("integer package", func(t *testing.T) {
 		value, fail := samael.LexProject("shojo", "../test/config/integerPackage/", projectFunc)
 
@@ -82,13 +90,21 @@ func TestLex(t *testing.T) {
 	t.Run("string Tlmgr Version", func(t *testing.T) {
 		value, fail := samael.LexProject("shojo", "../test/config/stringTlmgrVersion/", projectFunc)
 
-		if nil == fail {
-			t.Errorf("Expected to get an error but got the response: \n%v", value)
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
 		}
 	})
 
 	t.Run("tex", func(t *testing.T) {
 		value, fail := samael.LexProject("shojo", "../test/config/tex/", projectFunc)
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+	})
+
+	t.Run("tex Version", func(t *testing.T) {
+		value, fail := samael.LexProject("shojo", "../test/config/texVersion/", projectFunc)
 
 		if nil != fail {
 			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)

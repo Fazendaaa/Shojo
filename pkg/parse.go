@@ -8,12 +8,12 @@ import (
 )
 
 func checkTex(tex Tex) (_ Tex, fail error) {
-	digits := 3
+	digits := 2
 	version := strings.Split(tex.Version, ".")
 
 	if 0 < len(tex.Version) && digits != len(version) {
-		return tex, fmt.Errorf(`Tex version isn't valid, the version should be in
-the SemVer format, but the presented version has %d slices instead of %d`,
+		return tex, fmt.Errorf(`Tex version isn't valid, the presented version has
+%d slices instead of %d`,
 			len(version), digits)
 	}
 

@@ -1,5 +1,5 @@
 tex:
-  version: 6.3.3
+  version: 3.141592653
 packages:
   - multirow
   - wrapfig
