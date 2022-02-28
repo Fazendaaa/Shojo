@@ -1,7 +1,7 @@
 tex:
     version: "3.141592653"
 tlmgr:
-    version: ""
+    version: "61401"
 repository:
     url: https://mirror.ctan.org/systems/texlive/tlnet/
 packages: []

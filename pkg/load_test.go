@@ -117,7 +117,7 @@ func TestLoad(t *testing.T) {
 				Version: "3.141592653",
 			},
 			TLMGR: TLMGR{
-				Version: "",
+				Version: "61401",
 			},
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",

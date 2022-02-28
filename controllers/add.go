@@ -17,7 +17,7 @@ func AddPackage(packages []string) {
 	project, fail := shojo.Load(path)
 
 	if nil != fail {
-		fmt.Errorf("%w;\nmalformed tex definition", fail)
+		fmt.Errorf("%v;\nmalformed project file definition", fail)
 	}
 
 	fmt.Println(project)
