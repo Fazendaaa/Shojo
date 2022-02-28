@@ -10,7 +10,7 @@ var initCmd = &cobra.Command{
 	Short: "Initialize's Shojo package manager",
 	Long: `Initialize's Shojo package manager in the given directory creating
 shojo.yml and feeding it with the needed packages set up`,
-	Args: validPath,
+	Args: validPath("init"),
 	Run: func(cmd *cobra.Command, params []string) {
 		controllers.InitProject(params[0])
 	},
