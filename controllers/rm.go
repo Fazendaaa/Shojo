@@ -11,7 +11,7 @@ func RmPackages(packages []string) {
 	path, fail := os.Getwd()
 
 	if nil != fail {
-		fmt.Errorf("%w;\ncould not read current directory", fail)
+		fmt.Printf("%v;\ncould not read current directory", fail)
 	}
 
 	project, fail := shojo.Load(path)
@@ -19,6 +19,6 @@ func RmPackages(packages []string) {
 	fmt.Println(project)
 
 	if nil != fail {
-		fmt.Errorf("%w;\nmalformed tex definition", fail)
+		fmt.Printf("%v;\nmalformed tex definition", fail)
 	}
 }

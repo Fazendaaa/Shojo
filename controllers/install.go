@@ -7,7 +7,7 @@ import (
 	shojo "github.com/Fazendaaa/Shojo/pkg"
 )
 
-func InitProject() {
+func InstallProject() {
 	path, fail := os.Getwd()
 
 	if nil != fail {

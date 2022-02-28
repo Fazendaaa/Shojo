@@ -6,10 +6,8 @@ func tlmgr(subcommand string, paramters []string) (result string, fail error) {
 	return shell("tlmgr", append([]string{subcommand}, paramters...))
 }
 
-func install(packageName string) (fail error) {
-	_, fail = tlmgr("install", []string{packageName})
-
-	return fail
+func InstallPackage(packageName string) (result string, fail error) {
+	return tlmgr("install", []string{packageName})
 }
 
 func tlmgrVersion() (version string, fail error) {

@@ -9,7 +9,7 @@ import (
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Print the version number of Shojo",
+	Short: "Prints Shojo's version",
 	Long:  `All software has versions. This is Shojo's`,
 	Run: func(cmd *cobra.Command, params []string) {
 		fmt.Println(controllers.Version())

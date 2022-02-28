@@ -11,14 +11,26 @@ func AddPackage(packages []string) {
 	path, fail := os.Getwd()
 
 	if nil != fail {
-		fmt.Errorf("%w;\ncould not read current directory", fail)
+		fmt.Printf("%v;\ncould not read current directory", fail)
 	}
 
 	project, fail := shojo.Load(path)
 
 	if nil != fail {
-		fmt.Errorf("%v;\nmalformed project file definition", fail)
+		fmt.Printf("%v;\nmalformed project file definition", fail)
 	}
 
-	fmt.Println(project)
+	for _, packageName := range packages {
+		result, pkgFail := shojo.InstallPackage(packageName)
+
+		if nil != pkgFail {
+			fmt.Printf(`%v;
+error while installing package '%s';
+halted execution`, pkgFail, packageName)
+			fmt.Println(project)
+			break
+		}
+
+		fmt.Println(result)
+	}
 }

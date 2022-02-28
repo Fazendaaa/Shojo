@@ -1,6 +1,7 @@
 package shojo
 
 import (
+	"fmt"
 	"os/exec"
 )
 
@@ -8,11 +9,12 @@ import (
 // https://stackoverflow.com/a/7786922/7092954
 func shell(command string, parameters []string) (result string, fail error) {
 	cmd := exec.Command(command, parameters...)
-	stdout, err := cmd.Output()
+	stdout, fail := cmd.Output()
 
-	if err != nil {
-		return result, err
+	if nil != fail {
+		return result, fmt.Errorf(`%w;
+error while executing command: %s %+q`, fail, command, parameters)
 	}
 
-	return string(stdout), nil
+	return string(stdout), fail
 }
