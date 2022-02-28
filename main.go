@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Fazendaaa/shojo/cmd"
+	"github.com/Fazendaaa/Shojo/cmd"
 )
 
 func main() {
