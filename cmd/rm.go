@@ -6,9 +6,10 @@ import (
 )
 
 var rmCmd = &cobra.Command{
-	Use:   "rm",
+	Use:   "rm [projects' path]",
 	Short: "Removes a LaTex package to the current project",
 	Long:  ``,
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, params []string) {
 		controllers.RmPackages(params)
 	},

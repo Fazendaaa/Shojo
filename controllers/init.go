@@ -2,17 +2,14 @@ package controllers
 
 import (
 	"fmt"
-	"os"
 
 	shojo "github.com/Fazendaaa/Shojo/pkg"
 )
 
-func InitProject() {
-	path, fail := os.Getwd()
+func InitProject(projectPath string) {
+	fail := shojo.CreateProject(projectPath)
 
 	if nil != fail {
-		fmt.Printf("%v;\ncould not read current directory", fail)
+		fmt.Printf("%v;\ncould not create project in the given directory", fail)
 	}
-
-	shojo.CreateProject(path)
 }

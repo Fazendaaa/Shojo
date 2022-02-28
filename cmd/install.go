@@ -6,9 +6,9 @@ import (
 )
 
 var installCmd = &cobra.Command{
-	Use:   "install",
+	Use:   "install [projects' path]",
 	Short: "Install all presented LaTex packages in the current project",
-	Long:  ``,
+	Args:  validPath,
 	Run: func(cmd *cobra.Command, params []string) {
 		controllers.InstallProject()
 	},
