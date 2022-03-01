@@ -64,13 +64,6 @@ error while running regex process for '%s' package`, fail, packageName)
 error while running regex process for '%s' package`, fail, packageName)
 	}
 
-	show.Category, fail = applyRegex("category", packageName, result)
-
-	if nil != fail {
-		return show, fmt.Errorf(`%w;
-error while running regex process for '%s' package`, fail, packageName)
-	}
-
 	show.Shortdesc, fail = applyRegex("shortdesc", packageName, result)
 
 	if nil != fail {
@@ -113,40 +106,11 @@ error while running regex process for '%s' package`, fail, packageName)
 error while running regex process for '%s' package`, fail, packageName)
 	}
 
-	show.CatVersion, fail = applyRegex("cat-version", packageName, result)
-
-	if nil != fail {
-		return show, fmt.Errorf(`%w;
-error while running regex process for '%s' package`, fail, packageName)
-	}
-
-	show.CatLicense, fail = applyRegex("cat-license", packageName, result)
-
-	if nil != fail {
-		return show, fmt.Errorf(`%w;
-error while running regex process for '%s' package`, fail, packageName)
-	}
-
-	show.CatTopics, fail = applyRegex("cat-topics", packageName, result)
-
-	if nil != fail {
-		return show, fmt.Errorf(`%w;
-error while running regex process for '%s' package`, fail, packageName)
-	}
-
-	show.CatRelated, fail = applyRegex("cat-related", packageName, result)
-
-	if nil != fail {
-		return show, fmt.Errorf(`%w;
-error while running regex process for '%s' package`, fail, packageName)
-	}
-
-	show.Collection, fail = applyRegex("collection", packageName, result)
-
-	if nil != fail {
-		return show, fmt.Errorf(`%w;
-error while running regex process for '%s' package`, fail, packageName)
-	}
+	show.CatVersion, _ = applyRegex("cat-version", packageName, result)
+	show.CatLicense, _ = applyRegex("cat-license", packageName, result)
+	show.CatTopics, _ = applyRegex("cat-topics", packageName, result)
+	show.CatRelated, _ = applyRegex("cat-related", packageName, result)
+	show.Collection, _ = applyRegex("collection", packageName, result)
 
 	return show, fail
 }
