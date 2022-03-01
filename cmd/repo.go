@@ -16,7 +16,8 @@ var repoCmd = &cobra.Command{
 		spinner, fail := createSpinner(" setting repository", "")
 
 		if nil != fail {
-			fmt.Printf("\n%v", fail)
+			fmt.Println()
+			fmt.Println(fail)
 
 			return
 		}
@@ -24,7 +25,8 @@ var repoCmd = &cobra.Command{
 		fail = controllers.SetRepository(params[0], projectPath)
 
 		if nil != fail {
-			fmt.Printf("\n%v", fail)
+			fmt.Println()
+			fmt.Println(fail)
 
 			killSpinner(spinner, false)
 

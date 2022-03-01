@@ -16,7 +16,8 @@ var addCmd = &cobra.Command{
 		spinner, fail := createSpinner(" adding package", "")
 
 		if nil != fail {
-			fmt.Printf("\n%v", fail)
+			fmt.Println()
+			fmt.Println(fail)
 
 			return
 		}
@@ -25,7 +26,8 @@ var addCmd = &cobra.Command{
 		fail = consumeChannel(params, "installing", spinner, resultChannel)
 
 		if nil != fail {
-			fmt.Printf("\n%v", fail)
+			fmt.Println()
+			fmt.Println(fail)
 
 			killSpinner(spinner, false)
 

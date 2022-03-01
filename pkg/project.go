@@ -137,6 +137,35 @@ func CreateProject(projectPath string) (fail error) {
 }
 
 func InstallProject(path string) (fail error) {
+	project, fail := load(path)
+
+	if fail != nil {
+		return fmt.Errorf("%w;\nerror while reading file from: %s", fail, path)
+	}
+
+	if 0 == len(project.Packages) {
+		return fmt.Errorf("no packages to install listed in shojo's config in: %s", path)
+	}
+
+	for _, toInstall := range project.Packages {
+		installed, fail := isInstalled(toInstall.Name)
+
+		if fail != nil {
+			return fmt.Errorf(`%w;
+error while checking whether or not '%s' package is installed;`, fail, toInstall.Name)
+		}
+
+		if !installed {
+			result, fail := installPackage(toInstall.Name)
+
+			if fail != nil {
+				return fmt.Errorf(`%s;
+%w;
+error while installing '%s' package;`, result, fail, toInstall.Name)
+			}
+		}
+	}
+
 	return fail
 }
 

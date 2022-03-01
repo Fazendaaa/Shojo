@@ -18,7 +18,8 @@ var (
 			spinner, fail := createSpinner(" removing package", "")
 
 			if nil != fail {
-				fmt.Printf("\n%v", fail)
+				fmt.Println()
+				fmt.Println(fail)
 
 				return
 			}
@@ -27,7 +28,8 @@ var (
 			fail = consumeChannel(params, "removing", spinner, resultChannel)
 
 			if nil != fail {
-				fmt.Printf("\n%v", fail)
+				fmt.Println()
+				fmt.Println(fail)
 
 				killSpinner(spinner, false)
 
