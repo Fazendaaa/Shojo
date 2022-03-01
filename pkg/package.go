@@ -6,5 +6,11 @@ type Package struct {
 }
 
 func isPackagePresent(project Project, packageName string) (present bool) {
-	return present
+	for _, toCheck := range project.Packages {
+		if toCheck.Name == packageName {
+			return true
+		}
+	}
+
+	return false
 }

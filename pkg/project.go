@@ -1,6 +1,7 @@
 package shojo
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 
@@ -46,7 +47,12 @@ func writeProject(data interface{}, filePath string) (fail error) {
 		return fmt.Errorf("%w;\nerror while parsing data to be saved into project file", fail)
 	}
 
-	fail = ioutil.WriteFile(filePath, yamlData, 0644)
+	buffer := bytes.NewBuffer(yamlData)
+	yamlEncoder := yaml.NewEncoder(buffer)
+
+	yamlEncoder.SetIndent(2)
+
+	fail = ioutil.WriteFile(filePath, buffer.Bytes(), 0644)
 
 	if fail != nil {
 		return fmt.Errorf("%w;\nerror to write data into the file", fail)
@@ -126,8 +132,15 @@ func AddToProject(path string, packageName string) (result string, fail error) {
 		return result, fmt.Errorf("%w;\nerror while installing '%s' package", fail, path)
 	}
 
+	show, fail := packageShow(packageName)
+
+	if fail != nil {
+		return result, fmt.Errorf("%w;\nerror while fetching information about installed '%s' package", fail, path)
+	}
+
 	project.Packages = append(project.Packages, Package{
-		Name: packageName,
+		Name:     packageName,
+		Revision: show.Revision,
 	})
 	fail = writeProject(project, project.filename)
 

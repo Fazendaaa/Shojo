@@ -22,15 +22,24 @@ type Show struct {
 }
 
 func applyRegex(topic string, packageName string, show string) (result string, fail error) {
-	regex, fail := regexp.Compile(`^` + packageName + `:\s*(?.*)$`)
+	pattern := fmt.Sprintf(`%s:\s*(.*)\n`, topic)
+	regex, fail := regexp.Compile(pattern)
 
 	if nil != fail {
-		return show, fmt.Errorf(`%w;
-error while generating regex for package 'show' command for '%s' package`,
-			fail, packageName)
+		return result, fmt.Errorf(`%w;
+error while generating regex for 'show' command for '%s' package in '%s' topic`,
+			fail, packageName, topic)
 	}
 
-	return regex.FindStringSubmatch(result)[1], fail
+	matches := regex.FindStringSubmatch(show)
+
+	if 1 > len(matches) {
+		return show, fmt.Errorf(`%w;
+error while processing information for 'show' command for '%s' package in '%s' topic`,
+			fail, packageName, topic)
+	}
+
+	return matches[1], fail
 }
 
 func packageShow(packageName string) (show Show, fail error) {
