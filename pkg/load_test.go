@@ -1,14 +1,60 @@
 package shojo
 
 import (
+	"path/filepath"
 	"reflect"
 	"testing"
 )
 
-func Testload(t *testing.T) {
+var (
+	PACKAGES = []Package{
+		{
+			Name:     "multirow",
+			Revision: "58396",
+		},
+		{
+			Name:     "wrapfig",
+			Revision: "61719",
+		},
+		{
+			Name:     "lastpage",
+			Revision: "60414",
+		},
+		{
+			Name:     "hyphenat",
+			Revision: "15878",
+		},
+		{
+			Name:     "hyphen-portuguese",
+			Revision: "58609",
+		},
+		{
+			Name:     "babel-portuges",
+			Revision: "59883",
+		},
+		{
+			Name:     "fancyhdr",
+			Revision: "57672",
+		},
+		{
+			Name:     "tabu",
+			Revision: "61719",
+		},
+		{
+			Name:     "varwidth",
+			Revision: "24104",
+		},
+	}
+)
+
+func TestLoad(t *testing.T) {
 	t.Run("complete", func(t *testing.T) {
-		value, fail := load("../test/config/complete/")
+		path := "../test/config/complete/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "3.141592653",
 			},
@@ -18,35 +64,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -59,8 +77,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("default", func(t *testing.T) {
-		value, fail := load("../test/config/default/")
+		path := "../test/config/default/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "",
 			},
@@ -70,35 +92,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -111,8 +105,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("init", func(t *testing.T) {
-		value, fail := load("../test/config/init/")
+		path := "../test/config/init/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "3.141592653",
 			},
@@ -135,7 +133,8 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("missing", func(t *testing.T) {
-		value, fail := load("../test/config/missing/")
+		path := "../test/config/missing/"
+		value, fail := load(path)
 
 		if nil == fail {
 			t.Errorf("Expected to got a invalid missing project error but got the following value:\n%v", value)
@@ -143,8 +142,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("named", func(t *testing.T) {
-		value, fail := load("../test/config/named/foo.yml")
+		path := "../test/config/named/"
+		file := "foo.yml"
+		filename := filepath.Join(path, file)
+		value, fail := load(filename)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "",
 			},
@@ -154,35 +157,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -195,8 +170,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("repository", func(t *testing.T) {
-		value, fail := load("../test/config/repository/")
+		path := "../test/config/repository/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "",
 			},
@@ -206,35 +185,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -247,8 +198,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("repository URL", func(t *testing.T) {
-		value, fail := load("../test/config/repositoryURL/")
+		path := "../test/config/repositoryURL/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "",
 			},
@@ -258,35 +213,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -299,8 +226,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("tex", func(t *testing.T) {
-		value, fail := load("../test/config/tex/")
+		path := "../test/config/tex/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "3.141592653",
 			},
@@ -310,35 +241,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -351,8 +254,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("tex Version", func(t *testing.T) {
-		value, fail := load("../test/config/texVersion/")
+		path := "../test/config/texVersion/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "3.141592653",
 			},
@@ -362,35 +269,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -403,8 +282,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("tlmgr", func(t *testing.T) {
-		value, fail := load("../test/config/tlmgr/")
+		path := "../test/config/tlmgr/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "",
 			},
@@ -414,35 +297,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -455,8 +310,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("tlmgr Version", func(t *testing.T) {
-		value, fail := load("../test/config/tlmgrVersion/")
+		path := "../test/config/tlmgrVersion/"
+		file := "shojo.yaml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "",
 			},
@@ -466,35 +325,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {
@@ -507,8 +338,12 @@ func Testload(t *testing.T) {
 	})
 
 	t.Run("yml", func(t *testing.T) {
-		value, fail := load("../test/config/yml/")
+		path := "../test/config/yml/"
+		file := "shojo.yml"
+		filename := filepath.Join(path, file)
+		value, fail := load(path)
 		expected := Project{
+			filename: filename,
 			Tex: Tex{
 				Version: "",
 			},
@@ -518,35 +353,7 @@ func Testload(t *testing.T) {
 			Repository: Repository{
 				URL: "https://mirror.ctan.org/systems/texlive/tlnet/",
 			},
-			Packages: []Package{
-				{
-					Name: "multirow",
-				},
-				{
-					Name: "wrapfig",
-				},
-				{
-					Name: "lastpage",
-				},
-				{
-					Name: "hyphenat",
-				},
-				{
-					Name: "hyphen-portuguese",
-				},
-				{
-					Name: "babel-portuges",
-				},
-				{
-					Name: "fancyhdr",
-				},
-				{
-					Name: "tabu",
-				},
-				{
-					Name: "varwidth",
-				},
-			},
+			Packages: PACKAGES,
 		}
 
 		if nil != fail {

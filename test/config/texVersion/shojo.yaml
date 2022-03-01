@@ -1,11 +1,20 @@
 tex: 3.141592653
 packages:
-  - multirow
-  - wrapfig
-  - lastpage
-  - hyphenat
-  - hyphen-portuguese
-  - babel-portuges
-  - fancyhdr
-  - tabu
-  - varwidth
+  - name: multirow
+    revision: "58396"
+  - name: wrapfig
+    revision: "61719"
+  - name: lastpage
+    revision: "60414"
+  - name: hyphenat
+    revision: "15878"
+  - name: hyphen-portuguese
+    revision: "58609"
+  - name: babel-portuges
+    revision: "59883"
+  - name: fancyhdr
+    revision: "57672"
+  - name: tabu
+    revision: "61719"
+  - name: varwidth
+    revision: "24104"

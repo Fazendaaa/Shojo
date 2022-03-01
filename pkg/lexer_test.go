@@ -23,6 +23,14 @@ func TestLex(t *testing.T) {
 		}
 	})
 
+	t.Run("empty", func(t *testing.T) {
+		value, fail := samael.LexProject("shojo", "../test/config/default/", projectFunc)
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
+		}
+	})
+
 	t.Run("init", func(t *testing.T) {
 		value, fail := samael.LexProject("shojo", "../test/config/init/", projectFunc)
 
@@ -36,6 +44,14 @@ func TestLex(t *testing.T) {
 
 		if nil == fail {
 			t.Errorf("Expected to get an error but got the response: \n%v", value)
+		}
+	})
+
+	t.Run("integer packages", func(t *testing.T) {
+		value, fail := samael.LexProject("shojo", "../test/config/integerPackages/", projectFunc)
+
+		if nil != fail {
+			t.Errorf("got:\n%v\n and the given error condition is:\n%s", value, fail)
 		}
 	})
 

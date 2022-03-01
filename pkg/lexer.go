@@ -106,13 +106,35 @@ func repositoryToProject(origin map[interface{}]interface{}) (repository Reposit
 }
 
 func interfaceToPackage(origin interface{}) (result Package, fail error) {
-	read, ok := origin.(string)
+	read, ok := origin.(map[string]interface{})
 
 	if !ok {
-		return result, fmt.Errorf("Package definition is not a string")
+		return result, fmt.Errorf("package definition is not formed by name and revision")
 	}
 
-	result.Name = read
+	result.Name, ok = read["name"].(string)
+
+	if !ok {
+		return result, fmt.Errorf("package '%s' name is malformed", read["name"])
+	}
+
+	switch read["revision"].(type) {
+	default:
+		return result, fmt.Errorf(`package '%s' version is malformed;
+expected string or integer and got '%s'`, result.Name, reflect.TypeOf(read["revision"]))
+	case string:
+		result.Revision, ok = read["revision"].(string)
+	case int:
+		revision, ok := read["revision"].(int)
+
+		if ok {
+			result.Revision = strconv.Itoa(revision)
+		}
+	}
+
+	if !ok {
+		return result, fmt.Errorf("package '%s' version is malformed", result.Name)
+	}
 
 	return result, fail
 }
