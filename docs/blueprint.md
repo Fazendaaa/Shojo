@@ -20,18 +20,25 @@ Currently, in the company that I work for we have a CLI (Command Line Interface)
 The main ideia is that you have a `shojo.yaml` like the following describing the required packages needed for the project:
 
 ```yaml
-repository: https://mirror.ctan.org/systems/texlive/tlnet
-pacakges:
-  - multirow
-  - wrapfig
-  - lastpage
-  - hyphenat
-  - hyphen-portuguese
-  - babel-portuges
-  - fancyhdr
-  - tabu
-  - varwidth
-  ...
+packages:
+  - name: multirow
+    revision: 58396
+  - name: wrapfig
+    revision: 61719
+  - name: lastpage
+    revision: 60414
+  - name: hyphenat
+    revision: 15878
+  - name: hyphen-portuguese
+    revision: 58609
+  - name: babel-portuges
+    revision: 59883
+  - name: fancyhdr
+    revision: 57672
+  - name: tabu
+    revision: 61719
+  - name: varwidth
+    revision: 24104
 ```
 
 As `estat` have grown so much and making it available as FOSS (Free and open-source software) was always the idea but the project still in development and not having a properly defined scope, I decided to break its main features in other projects:
