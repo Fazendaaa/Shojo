@@ -2,11 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"time"
 
 	controllers "github.com/Fazendaaa/Shojo/controllers"
 	"github.com/spf13/cobra"
-	"github.com/theckman/yacspin"
 )
 
 var (
@@ -17,29 +15,11 @@ var (
 		Long:  ``,
 		Args:  validateProjectPath,
 		Run: func(cmd *cobra.Command, params []string) {
-			config := yacspin.Config{
-				Frequency:         100 * time.Millisecond,
-				CharSet:           yacspin.CharSets[35],
-				Suffix:            " removing package",
-				SuffixAutoColon:   true,
-				Message:           "exporting data",
-				StopCharacter:     "✓",
-				StopMessage:       "done",
-				StopFailCharacter: "✗",
-				StopFailMessage:   "failed",
-				StopColors:        []string{"fgGreen"},
-			}
-			spinner, fail := yacspin.New(config)
+			spinner, fail := createSpinner(" removing package", "")
 
 			if nil != fail {
 				fmt.Printf("\n%v", fail)
-				return
-			}
 
-			fail = spinner.Start()
-
-			if nil != fail {
-				fmt.Printf("\n%v", fail)
 				return
 			}
 
@@ -49,21 +29,14 @@ var (
 
 				if nil != fail {
 					fmt.Printf("\n%v", fail)
-					fail = spinner.StopFail()
 
-					if nil != fail {
-						fmt.Printf("\n%v", fail)
-					}
+					killSpinner(spinner, false)
 
 					return
 				}
 			}
 
-			fail = spinner.Stop()
-
-			if nil != fail {
-				fmt.Printf("\n%v", fail)
-			}
+			killSpinner(spinner, true)
 		},
 	}
 )
