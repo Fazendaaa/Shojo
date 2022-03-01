@@ -160,6 +160,7 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 ### BlogPosts
 
 - [Set Indentation on New Golang YAML v3 Library](https://hashnode.com/post/set-indentation-on-new-golang-yaml-v3-library-ckbrwl63001skn8s1lj3jmtln)
+- [How to Access Interface Fields in Golang?](https://www.geeksforgeeks.org/how-to-access-interface-fields-in-golang/)
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#license)

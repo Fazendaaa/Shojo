@@ -16,9 +16,17 @@ type Project struct {
 	Packages   []Package  `yaml:"packages"`
 }
 
+func (project Project) getFilename() string {
+	return project.filename
+}
+
 type MissingAll struct {
 	filename string
 	Packages []Package `yaml:"packages"`
+}
+
+func (project MissingAll) getFilename() string {
+	return project.filename
 }
 
 type MissingTex struct {
@@ -27,10 +35,18 @@ type MissingTex struct {
 	Packages []Package `yaml:"packages"`
 }
 
+func (project MissingTex) getFilename() string {
+	return project.filename
+}
+
 type MissingTLMGR struct {
 	filename string
 	Tex      Tex       `yaml:"tex"`
 	Packages []Package `yaml:"packages"`
+}
+
+func (project MissingTLMGR) getFilename() string {
+	return project.filename
 }
 
 type MissingRepository struct {
@@ -40,8 +56,16 @@ type MissingRepository struct {
 	Packages []Package `yaml:"packages"`
 }
 
-func writeProject(data interface{}, filePath string) (fail error) {
-	yamlData, fail := yaml.Marshal(data)
+func (project MissingRepository) getFilename() string {
+	return project.filename
+}
+
+type GenericRepository interface {
+	getFilename() string
+}
+
+func writeToProject(data GenericRepository) (fail error) {
+	yamlData, fail := yaml.Marshal(&data)
 
 	if fail != nil {
 		return fmt.Errorf("%w;\nerror while parsing data to be saved into project file", fail)
@@ -52,7 +76,7 @@ func writeProject(data interface{}, filePath string) (fail error) {
 
 	yamlEncoder.SetIndent(2)
 
-	fail = ioutil.WriteFile(filePath, buffer.Bytes(), 0644)
+	fail = ioutil.WriteFile(data.getFilename(), buffer.Bytes(), 0644)
 
 	if fail != nil {
 		return fmt.Errorf("%w;\nerror to write data into the file", fail)
@@ -62,7 +86,7 @@ func writeProject(data interface{}, filePath string) (fail error) {
 }
 
 func CreateProject(projectPath string) (fail error) {
-	var data interface{}
+	var data GenericRepository
 	filename := "shojo.yaml"
 	tlmgrVersion, fail := tlmgrVersion()
 
@@ -109,7 +133,7 @@ func CreateProject(projectPath string) (fail error) {
 		}
 	}
 
-	return writeProject(data, filename)
+	return writeToProject(data)
 }
 
 func InstallProject(path string) (fail error) {
@@ -132,23 +156,28 @@ func AddToProject(path string, packageName string) (result string, fail error) {
 		return result, fmt.Errorf("%w;\nerror while installing '%s' package", fail, path)
 	}
 
+	return result, fail
+}
+
+func AddToDescription(path string, packageName string) (fail error) {
+	project, fail := load(path)
+
+	if fail != nil {
+		return fmt.Errorf("%w;\nerror while reading file from: %s", fail, path)
+	}
+
 	show, fail := packageShow(packageName)
 
 	if fail != nil {
-		return result, fmt.Errorf("%w;\nerror while fetching information about installed '%s' package", fail, path)
+		return fmt.Errorf("%w;\nerror while fetching information about installed '%s' package", fail, path)
 	}
 
 	project.Packages = append(project.Packages, Package{
 		Name:     packageName,
 		Revision: show.Revision,
 	})
-	fail = writeProject(project, project.filename)
 
-	if fail != nil {
-		return result, fmt.Errorf("%w;\nerror while updating project file after installing '%s' package", fail, path)
-	}
-
-	return result, fail
+	return writeToProject(project)
 }
 
 func RmFromProject(path string, packageName string, uninstall bool) (result string, fail error) {
@@ -161,12 +190,6 @@ func RmFromProject(path string, packageName string, uninstall bool) (result stri
 		return result, fmt.Errorf("package '%s' not present in project", packageName)
 	}
 
-	fail = removePackage(&project, packageName)
-
-	if fail != nil {
-		return result, fmt.Errorf("%w;\nerror while removing '%s' package", fail, path)
-	}
-
 	if uninstall {
 		result, fail = uninstallPackage(packageName)
 
@@ -175,11 +198,27 @@ func RmFromProject(path string, packageName string, uninstall bool) (result stri
 		}
 	}
 
-	fail = writeProject(project, project.filename)
+	return result, fail
+}
+
+func RmFromDescription(path string, packageName string) (fail error) {
+	project, fail := load(path)
 
 	if fail != nil {
-		return result, fmt.Errorf("%w;\nerror while updating project file after removing '%s' package", fail, path)
+		return fmt.Errorf("%w;\nerror while reading file from: %s", fail, path)
 	}
 
-	return result, fail
+	fail = removePackage(&project, packageName)
+
+	if fail != nil {
+		return fmt.Errorf("%w;\nerror while removing '%s' package", fail, path)
+	}
+
+	fail = writeToProject(project)
+
+	if fail != nil {
+		return fmt.Errorf("%w;\nerror while updating project file after removing '%s' package", fail, path)
+	}
+
+	return fail
 }

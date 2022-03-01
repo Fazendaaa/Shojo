@@ -23,17 +23,15 @@ var (
 				return
 			}
 
-			for _, packageName := range params {
-				spinner.Message(fmt.Sprintf("'%s'", packageName))
-				fail = controllers.RmPackages(packageName, projectPath, uninstall)
+			resultChannel := controllers.RmPackages(params, projectPath, uninstall)
+			fail = consumeChannel(params, "removing", spinner, resultChannel)
 
-				if nil != fail {
-					fmt.Printf("\n%v", fail)
+			if nil != fail {
+				fmt.Printf("\n%v", fail)
 
-					killSpinner(spinner, false)
+				killSpinner(spinner, false)
 
-					return
-				}
+				return
 			}
 
 			killSpinner(spinner, true)

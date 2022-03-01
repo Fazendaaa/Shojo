@@ -21,17 +21,15 @@ var addCmd = &cobra.Command{
 			return
 		}
 
-		for _, packageName := range params {
-			spinner.Message(fmt.Sprintf("'%s'", packageName))
-			fail = controllers.AddPackage(packageName, projectPath)
+		resultChannel := controllers.AddPackages(params, projectPath)
+		fail = consumeChannel(params, "installing", spinner, resultChannel)
 
-			if nil != fail {
-				fmt.Printf("\n%v", fail)
+		if nil != fail {
+			fmt.Printf("\n%v", fail)
 
-				killSpinner(spinner, false)
+			killSpinner(spinner, false)
 
-				return
-			}
+			return
 		}
 
 		killSpinner(spinner, true)
