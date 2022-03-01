@@ -7,6 +7,19 @@ import (
 	"strings"
 )
 
+func checkURL(URL string) (fail error) {
+	request, fail := url.ParseRequestURI(URL)
+
+	if nil != fail {
+		return fmt.Errorf(`URL presented isn't valid;
+maybe missing "https://:" or even "https://:"?;
+sometimes adding a trailing "/" might help you;
+threw de following error %w:\n%s\n`, fail, request)
+	}
+
+	return fail
+}
+
 func checkTex(tex Tex) (_ Tex, fail error) {
 	digits := 2
 	version := strings.Split(tex.Version, ".")
@@ -38,11 +51,11 @@ func checkRepository(repository Repository) (_ Repository, fail error) {
 		return repository, fail
 	}
 
-	request, fail := url.ParseRequestURI(repository.URL)
+	fail = checkURL(repository.URL)
 
 	if nil != fail {
-		return repository, fmt.Errorf(`URL presented in repository isn't valid, the
-URL presented threw de following error %w:\n%s\n`, fail, request)
+		return repository, fmt.Errorf("%w;\nURL presented in repository isn't valid.",
+			fail)
 	}
 
 	return repository, fail
