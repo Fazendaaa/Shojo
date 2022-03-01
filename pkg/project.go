@@ -151,7 +151,7 @@ func AddToProject(path string, packageName string) (result string, fail error) {
 	return result, fail
 }
 
-func RmFromProject(path string, packageName string) (result string, fail error) {
+func RmFromProject(path string, packageName string, uninstall bool) (result string, fail error) {
 	project, fail := load(path)
 
 	if fail != nil {
@@ -161,10 +161,18 @@ func RmFromProject(path string, packageName string) (result string, fail error) 
 		return result, fmt.Errorf("package '%s' not present in project", packageName)
 	}
 
-	result, fail = removePackage(packageName)
+	fail = removePackage(&project, packageName)
 
 	if fail != nil {
-		return result, fmt.Errorf("%w;\nerror while uninstalling '%s' package", fail, path)
+		return result, fmt.Errorf("%w;\nerror while removing '%s' package", fail, path)
+	}
+
+	if uninstall {
+		result, fail = uninstallPackage(packageName)
+
+		if fail != nil {
+			return result, fmt.Errorf("%w;\nerror while uninstalling '%s' package", fail, path)
+		}
 	}
 
 	fail = writeProject(project, project.filename)

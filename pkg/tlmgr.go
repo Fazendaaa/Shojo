@@ -14,7 +14,7 @@ func installPackage(packageName string) (result string, fail error) {
 	return tlmgr("install", []string{packageName})
 }
 
-func removePackage(packageName string) (result string, fail error) {
+func uninstallPackage(packageName string) (result string, fail error) {
 	return tlmgr("remove", []string{"--force", packageName})
 }
 

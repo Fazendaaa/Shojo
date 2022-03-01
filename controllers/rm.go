@@ -6,18 +6,14 @@ import (
 	shojo "github.com/Fazendaaa/Shojo/pkg"
 )
 
-func RmPackages(packages []string, path string) {
-	for _, packageName := range packages {
-		result, pkgFail := shojo.RmFromProject(path, packageName)
+func RmPackages(packageName string, path string, uninstall bool) (fail error) {
+	_, pkgFail := shojo.RmFromProject(path, packageName, uninstall)
 
-		if nil != pkgFail {
-			fmt.Printf(`%v;
-error while installing package '%s';
-halted execution
-`, pkgFail, packageName)
-			break
-		}
-
-		fmt.Println(result)
+	if nil != pkgFail {
+		return fmt.Errorf(`%v;
+error while removing package '%s';
+halted execution`, pkgFail, packageName)
 	}
+
+	return fail
 }

@@ -152,8 +152,14 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 
 ## ➤ References
 
+### Docs
+
 - [tlmgr - the native TeX Live Manager](https://www.tug.org/texlive/doc/tlmgr.html)
 - [Go YAML](https://zetcode.com/golang/yaml/)
+
+### BlogPosts
+
+- [Set Indentation on New Golang YAML v3 Library](https://hashnode.com/post/set-indentation-on-new-golang-yaml-v3-library-ckbrwl63001skn8s1lj3jmtln)
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#license)
