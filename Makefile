@@ -9,6 +9,7 @@ doc:
 	@docker run --rm \
 		--volume ${PWD}:${PWD} \
 		--workdir ${PWD} fazenda/appnest \
+		--package docs/package.json \
 		--config docs/blueprint.json \
 		--input docs/blueprint.md \
 		--output README.md

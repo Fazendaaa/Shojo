@@ -42,6 +42,7 @@ jobs:
         run: |
           npm install -g npm
           npx @appnest/readme generate \
+          --package docs/package.json \
           --config docs/blueprint.json \
           --input docs/blueprint.md \
           --output README.md
