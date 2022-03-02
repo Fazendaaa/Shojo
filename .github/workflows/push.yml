@@ -5,8 +5,8 @@ on:
       - 'master'
 env:
   BINARY_NAME: shojo
-  REPO_OWNER: shojo
-  REPO_NAME: shojo
+  REPO_OWNER: Fazendaa
+  REPO_NAME: Shojo
 
 jobs:
   docker:
