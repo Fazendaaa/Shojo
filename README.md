@@ -116,7 +116,7 @@ After that you can run the following just to fell free to run the following:
 
 ```shell
 shojo init .
-shojo add multirow wrapfig lastpage hyphenat hyphen-portuguese babel-portuges fancyhdr tabu varwidth
+shojo add lastpage
 ```
 
 

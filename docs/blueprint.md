@@ -89,7 +89,7 @@ After that you can run the following just to fell free to run the following:
 
 ```shell
 shojo init .
-shojo add multirow wrapfig lastpage hyphenat hyphen-portuguese babel-portuges fancyhdr tabu varwidth
+shojo add lastpage
 ```
 
 ## Running
@@ -117,5 +117,6 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 
 - [Set Indentation on New Golang YAML v3 Library](https://hashnode.com/post/set-indentation-on-new-golang-yaml-v3-library-ckbrwl63001skn8s1lj3jmtln)
 - [How to Access Interface Fields in Golang?](https://www.geeksforgeeks.org/how-to-access-interface-fields-in-golang/)
+- [Build CI/CD pipelines in Go with github actions and Docker](https://dev.to/gopher/build-ci-cd-pipelines-in-go-with-github-actions-and-dockers-1ko7)
 
 {{ template:license }}
