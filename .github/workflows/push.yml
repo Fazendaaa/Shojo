@@ -35,11 +35,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
-          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+          persist-credentials: false
+          fetch-depth: 0
       -
         name: Generate docs
-        run: make doc
+        run: |
+          npm install -g npm
+          npx @appnest/readme generate --input docs/blueprint.md --output README.md
       -
         name: Commit files
         run: |
