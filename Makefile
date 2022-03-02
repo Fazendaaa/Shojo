@@ -10,3 +10,15 @@ doc:
 		--workdir /home/node/app appnest
 	@cp docs/README.md .
 	@rm docs/README.md
+
+builds:
+	@docker buildx build \
+		--file build/package/Dockerfile \
+		--platform linux/amd64 \
+		--load --tag shojo \
+		.
+	@docker buildx build \
+		--file build/package/Dockerfile.complete \
+		--platform linux/amd64 \
+		--load --tag shojo-latex \
+		.

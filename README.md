@@ -103,13 +103,20 @@ shojo repo https://mirror.ctan.org/systems/texlive/tlnet
 You don't need to install Go to run this tool, just Docker. And to do so to give it a try, you can do it just by running the following line in your terminal:
 
 ```shell
-alias shojo='docker run -it --volume $(pwd):/project --workdir /project fazenda/shojo'
+alias shojo='docker run -it --volume $(pwd):/project --workdir /project fazenda/shojo-latex'
 ```
 
 And then running the following to check whether or not is working properly:
 
 ```shell
 shojo --help
+```
+
+After that you can run the following just to fell free to run the following:
+
+```shell
+shojo init .
+shojo add multirow wrapfig lastpage hyphenat hyphen-portuguese babel-portuges fancyhdr tabu varwidth
 ```
 
 
