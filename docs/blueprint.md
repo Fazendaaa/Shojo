@@ -194,5 +194,6 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 - [How to Access Interface Fields in Golang?](https://www.geeksforgeeks.org/how-to-access-interface-fields-in-golang/)
 - [Build CI/CD pipelines in Go with github actions and Docker](https://dev.to/gopher/build-ci-cd-pipelines-in-go-with-github-actions-and-dockers-1ko7)
 - [GitHub Action for release your Go projects as fast and easily as possible](https://dev.to/koddr/github-action-for-release-your-go-projects-as-fast-and-easily-as-possible-20a2)
+- [How to test your Go code with Github actions](https://gfgfddgleb.medium.com/how-to-test-your-go-code-with-github-actions-f15881d46089)
 
 {{ template:license }}
