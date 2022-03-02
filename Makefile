@@ -1,15 +1,16 @@
-doc:
+build-docs:
 	@docker buildx build \
 		--file docs/Dockerfile \
 		--platform linux/amd64 \
-		--load --tag appnest \
+		--push --tag fazenda/appnest \
 		docs/
-# Jerry Rig
+
+doc:
 	@docker run --rm \
-		--volume $(shell pwd)/docs:/home/node/app \
-		--workdir /home/node/app appnest
-	@cp docs/README.md .
-	@rm docs/README.md
+		--volume ${PWD}:${PWD} \
+		--workdir ${PWD} fazenda/appnest \
+		--input docs/blueprint.md \
+		--output README.md
 
 builds:
 	@docker buildx build \
