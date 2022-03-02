@@ -5,7 +5,7 @@ on:
       - 'master'
 env:
   BINARY_NAME: shojo
-  REPO_OWNER: Fazendaa
+  REPO_OWNER: Fazendaaa
   REPO_NAME: Shojo
 
 jobs:
