@@ -45,15 +45,22 @@ packages:
     revision: 24104
 ```
 
-As `estat` have grown so much and making it available as FOSS (Free and open-source software) was always the idea but the project still in development and not having a properly defined scope, I decided to break its main features in other projects:
+## Why?
 
-- [Succubus](https://github.com/Fazendaaa/Succubus): universal package manager based on cloud-native
-- [Jinn](https://github.com/Fazendaaa/Jinn): universal project manager built to expand Succubus capabilities
-- [Baba Yaga](https://github.com/Fazendaaa/BabaYaga): universal cloud-native manager built to expand Jinn and Succubus capabilities
-- [Wendigo](https://github.com/Fazendaaa/Wendigo): universal project translator from cloud-native projects to other infra technologies
-- [Shōjō](https://github.com/Fazendaaa/Shojo): LaTex package manager
-- [Hellhound](github.com/Fazendaaa/Hellhound): VSCode extension to integrate Jinn recipes
-- [Crocotta](github.com/Fazendaaa/Crocotta): SOC assisted guider
+As many that use LaTex in a daily bases know, having to install all packages when you only need a few at most can be troublesome to say at least, besides that:
+
+- Having to maintain an old project
+- Many people using a plethora of editors
+- Building in a CI/CD environment
+- Time consuming
+- Updates
+- etc.
+
+That's why Shojo was born, to help maintain LaTex projects dependencies in a friendly manner inspired by other tools like:
+
+- [npm](https://www.npmjs.com/)
+- [poetry](https://python-poetry.org/)
+- [renv](https://rstudio.github.io/renv/index.html)
 
 ## Components
 
@@ -169,6 +176,18 @@ rm $HOME/.local/bin/shojo
 docker rmi --force fazenda/shojo-latex
 ```
 
+## CFD
+
+As `estat` have grown so much and making it available as FOSS (Free and open-source software) was always the idea but the project still in development and not having a properly defined scope, I decided to break its main features in other projects:
+
+- [Succubus](https://github.com/Fazendaaa/Succubus): universal package manager based on cloud-native
+- [Jinn](https://github.com/Fazendaaa/Jinn): universal project manager built to expand Succubus capabilities
+- [Baba Yaga](https://github.com/Fazendaaa/BabaYaga): universal cloud-native manager built to expand Jinn and Succubus capabilities
+- [Wendigo](https://github.com/Fazendaaa/Wendigo): universal project translator from cloud-native projects to other infra technologies
+- [Shōjō](https://github.com/Fazendaaa/Shojo): LaTex package manager
+- [Hellhound](github.com/Fazendaaa/Hellhound): VSCode extension to integrate Jinn recipes
+- [Crocotta](github.com/Fazendaaa/Crocotta): SOC assisted guider
+
 ## Author
 
 Only [me](https://github.com/Fazendaaa) because the aforementioned project was implemented by yours only. By knowing each line of that code wrote doing the port would be more easily done this way.
@@ -180,6 +199,8 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 {{ template:contributors }}
 
 ## TODO
+
+Read [TODO.md](./TODO.md) file.
 
 ## References
 
