@@ -1,8 +1,20 @@
 <!-- ⚠️ This README has been generated from the file(s) "docs/blueprint.md" ⚠️-->{{ template:title }}
 
-{{ template:logo }}
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Fazendaaa/Shojo/master/assets/img/logo.svg" alt="Logo" width="150" height="150" />
+</p>
 
-{{ template:badges }}
+<p align="center">
+		<a href="https://github.com/badges/shields"><img alt="Custom badge" src="https://img.shields.io/badge/custom-badge-f39f37.svg" height="20"/></a>
+<a href="https://saythanks.io/to/lucas.carotta%40outlook.com"><img alt="Say Thanks!" src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg?longCache=true&style=for-the-badge" height="20"/></a>
+<a href=""><img alt="" src="" height="20"/></a>
+<a href=""><img alt="" src="" height="20"/></a>
+<a href=""><img alt="" src="" height="20"/></a>
+<a href=""><img alt="" src="" height="20"/></a>
+<a href=""><img alt="" src="" height="20"/></a>
+<a href=""><img alt="" src="" height="20"/></a>
+	</p>
+
 
 {{ template:description }}
 
@@ -14,7 +26,7 @@ Made with:
 - [Docker](https://www.docker.com/)
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#ideia)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#ideia)
 
 ## ➤ Ideia
 
@@ -49,7 +61,7 @@ packages:
 ```
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#why)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#why)
 
 ## ➤ Why?
 
@@ -69,7 +81,7 @@ That's why Shojo was born, to help maintain LaTex projects dependencies in a fri
 - [renv](https://rstudio.github.io/renv/index.html)
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#components)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#components)
 
 ## ➤ Components
 
@@ -116,7 +128,7 @@ shojo repo https://mirror.ctan.org/systems/texlive/tlnet
 ```
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#installing)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#installing)
 
 ## ➤ Installing
 
@@ -169,7 +181,7 @@ shojo add lastpage
 ```
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#uninstalling)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#uninstalling)
 
 ## ➤ Uninstalling
 
@@ -192,7 +204,7 @@ docker rmi --force fazenda/shojo-latex
 ```
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#cfd)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#cfd)
 
 ## ➤ CFD
 
@@ -207,14 +219,14 @@ As `estat` have grown so much and making it available as FOSS (Free and open-sou
 - [Crocotta](github.com/Fazendaaa/Crocotta): SOC assisted guider
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#author)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#author)
 
 ## ➤ Author
 
 Only [me](https://github.com/Fazendaaa) because the aforementioned project was implemented by yours only. By knowing each line of that code wrote doing the port would be more easily done this way.
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#contributing)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#contributing)
 
 ## ➤ Contributing
 
@@ -223,14 +235,14 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 {{ template:contributors }}
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#todo)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#todo)
 
 ## ➤ TODO
 
 Read [TODO.md](./TODO.md) file.
 
 
-[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#references)
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#references)
 
 ## ➤ References
 
