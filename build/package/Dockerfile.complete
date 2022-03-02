@@ -47,34 +47,7 @@ RUN apk --no-cache add \
   mkdir /tmp/install-tl && \
   tar -xzf install-tl-unx.tar.gz -C /tmp/install-tl --strip-components=1 && \
   /tmp/install-tl/install-tl --profile=/tmp/texlive-profile.txt && \
-  tlmgr update --self && \
-  tlmgr install \
-  collection-basic \
-  collection-fontsrecommended \
-  collection-latex \
-  collection-latexrecommended \
-  collection-latexextra \
-  collection-mathscience \
-  baskervald \
-  biber \
-  biblatex \
-  cochineal \
-  crimson \
-  ebgaramond \
-  ebgaramond-maths \
-  fbb \
-  fontawesome \
-  genmisc \
-  ifetex \
-  kpfonts \
-  latexmk \
-  ly1 \
-  ulem && \
-  apk --no-cache del xz tar fontconfig-dev && \
-  rm -rf \
-  /var/lib/apt/lists/* \
-  /tmp/* \
-  /var/tmp/* \
-  install-tl-unx.tar.gz
+  tlmgr update --self
+RUN rm -rf install-tl-unx.tar.gz
 
 ENTRYPOINT [ "shojo" ]
