@@ -18,7 +18,6 @@ builds:
 		--load --tag shojo \
 		.
 	@docker buildx build \
-		--file build/package/Dockerfile.complete \
 		--platform linux/amd64 \
 		--load --tag shojo-latex \
 		.

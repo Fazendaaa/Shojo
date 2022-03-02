@@ -27,7 +27,6 @@ jobs:
           push: true
           context: .
           platforms: linux/amd64,linux/arm64
-          file: "{context}/build/package/Dockerfile.complete"
           tags: fazenda/shojo-latex:latest
           build-args: |
             ${{steps.version_step.outputs.version}}
