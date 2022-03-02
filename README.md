@@ -1,4 +1,4 @@
-<!-- ⚠️ This README has been generated from the file(s) "docs/blueprint.md" ⚠️-->{{ template:title }}
+<!-- ⚠️ This README has been generated from the file(s) "docs/blueprint.md" ⚠️--><h1 align="center">Shōjō</h1>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Fazendaaa/Shojo/master/assets/img/logo.svg" alt="Logo" width="150" height="150" />
@@ -16,9 +16,15 @@
 	</p>
 
 
-{{ template:description }}
+<p align="center">
+  <b>LaTex package manager</b></br>
+  <sub><sub>
+</p>
 
-Welcome to Fazendaaa's pkg.name. This is version pkg.version!
+<br />
+
+
+Welcome to Fazendaaa's Shōjō. This is version 0.0.0!
 
 Made with:
 
@@ -232,7 +238,16 @@ Only [me](https://github.com/Fazendaaa) because the aforementioned project was i
 
 Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list of some of our contributors:
 
-{{ template:contributors }}
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#contributors)
+
+## ➤ Contributors
+	
+
+| [<img alt="Fazendaaa" src="https://avatars2.githubusercontent.com/u/12137236?s=460&u=75ec76d6f0c577de2ebfa4eae77cc4c4ad17ec06&v=4" width="100">](https://twitter.com/the_fznd) | [<img alt="You?" src="https://joeschmoe.io/api/v1/random" width="100">](https://github.com/andreasbm/web-config/blob/master/CONTRIBUTING.md) |
+|:--------------------------------------------------:|:--------------------------------------------------:|
+| [Fazendaaa](https://twitter.com/the_fznd)        | [You?](https://github.com/andreasbm/web-config/blob/master/CONTRIBUTING.md) |
+
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#todo)
@@ -259,4 +274,9 @@ Read [TODO.md](./TODO.md) file.
 - [GitHub Action for release your Go projects as fast and easily as possible](https://dev.to/koddr/github-action-for-release-your-go-projects-as-fast-and-easily-as-possible-20a2)
 - [How to test your Go code with Github actions](https://gfgfddgleb.medium.com/how-to-test-your-go-code-with-github-actions-f15881d46089)
 
-{{ template:license }}
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png)](#license)
+
+## ➤ License
+	
+Licensed under [AGPL-3.0](https://opensource.org/licenses/AGPL-3.0).
