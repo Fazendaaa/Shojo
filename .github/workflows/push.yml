@@ -1,10 +1,9 @@
-name: shojo
+name: shojo build latest
+
 on:
   push:
     branches:
       - 'master'
-env:
-  BINARY_NAME: shojo
 
 jobs:
   docker:
@@ -29,26 +28,3 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: fazenda/shojo-latex:latest
-  release-linux-amd64:
-    name: Release Go Binary
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        goos: [linux, windows, darwin]
-        goarch: ["386", amd64, arm64]
-        exclude:
-          - goarch: "386"
-            goos: darwin
-          - goarch: arm64
-            goos: windows
-    steps:
-    - uses: actions/checkout@v2
-    - name: Run tests
-      run: go test -v -p=1 -timeout=0 ./...
-    - uses: wangyoucao577/go-release-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ matrix.goos }}
-        goarch: ${{ matrix.goarch }}
-        binary_name: "${{ env.BINARY_NAME }}"
-        extra_files: LICENSE README.md
