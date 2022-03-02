@@ -27,5 +27,3 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: fazenda/shojo-latex:latest
-          build-args: |
-            ${{steps.version_step.outputs.version}}
