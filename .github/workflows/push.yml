@@ -41,7 +41,10 @@ jobs:
         name: Generate docs
         run: |
           npm install -g npm
-          npx @appnest/readme generate --input docs/blueprint.md --output README.md
+          npx @appnest/readme generate \
+          --config docs/blueprint.json \
+          --input docs/blueprint.md \
+          --output README.md
       -
         name: Commit files
         run: |
