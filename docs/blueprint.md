@@ -15,6 +15,10 @@ Made with:
 
 ## Ideia
 
+<div align="center">
+  <img src="./assets/gif/demo.gif"/>
+</div>
+
 Currently, in the company that I work for we have a CLI (Command Line Interface) made in [Python](https://www.python.org/) called `estat` that you can read more about it right [here](https://github.com/Fazendaaa/Succubus). But one of its features is handeling LaTex packages to each of our projects.
 
 The main ideia is that you have a `shojo.yaml` like the following describing the required packages needed for the project:
@@ -53,7 +57,19 @@ As `estat` have grown so much and making it available as FOSS (Free and open-sou
 
 ## Components
 
+What you can do with Shojo:
+
+### install
+
+To install all packages from a Shojo project:
+
+```shell
+shojo install
+```
+
 ### init
+
+To initialize a new Shojo project:
 
 ```shell
 shojo init
@@ -61,11 +77,23 @@ shojo init
 
 ### add
 
+To add packages to this project:
+
 ```shell
 shojo add draftwatermark lastpage tabu ...
 ```
 
-### repository
+### rm
+
+To remove packages from this project:
+
+```shell
+shojo rm draftwatermark lastpage tabu ...
+```
+
+### repo
+
+To change the package's repository:
 
 ```shell
 shojo repo https://mirror.ctan.org/systems/texlive/tlnet
@@ -73,10 +101,39 @@ shojo repo https://mirror.ctan.org/systems/texlive/tlnet
 
 ## Installing
 
+### Go
+
+```shell
+go install github.com/Fazendaaa/Shojo@latest
+```
+
+In case you choose this route, just remember to use `Shojo` instead of `shojo` while using the command.
+
+#### Not loading
+
+Probably missing the following:
+
+```shell
+export GOPATH="$HOME/go/"
+export PATH="$PATH:$GOPATH/bin/"
+```
+
+### Binary
+
+Take a look first at [zyedidia/eget](https://github.com/zyedidia/eget)
+
+```shell
+curl https://zyedidia.github.io/eget.sh | sh
+./eget Fazendaaa/Shojo
+mv Shojo $HOME/.local/bin/shojo
+```
+
+### Docker
+
 You don't need to install Go to run this tool, just Docker. And to do so to give it a try, you can do it just by running the following line in your terminal:
 
 ```shell
-alias shojo='docker run -it --volume $(pwd):/project --workdir /project fazenda/shojo-latex'
+alias shojo='docker run -it --volume ${PWD}:${PWD} --workdir ${PWD} fazenda/shojo-latex'
 ```
 
 And then running the following to check whether or not is working properly:
@@ -92,7 +149,25 @@ shojo init .
 shojo add lastpage
 ```
 
-## Running
+## Uninstalling
+
+### Go
+
+```shell
+rm $GOPATH/bin/Shojo
+```
+
+### Binary
+
+```shell
+rm $HOME/.local/bin/shojo
+```
+
+### Docker
+
+```shell
+docker rmi --force fazenda/shojo-latex
+```
 
 ## Author
 
@@ -118,5 +193,6 @@ Check more about this in [CONTRIBUTING.md](CONTRIBUTING.md). Here we have a list
 - [Set Indentation on New Golang YAML v3 Library](https://hashnode.com/post/set-indentation-on-new-golang-yaml-v3-library-ckbrwl63001skn8s1lj3jmtln)
 - [How to Access Interface Fields in Golang?](https://www.geeksforgeeks.org/how-to-access-interface-fields-in-golang/)
 - [Build CI/CD pipelines in Go with github actions and Docker](https://dev.to/gopher/build-ci-cd-pipelines-in-go-with-github-actions-and-dockers-1ko7)
+- [GitHub Action for release your Go projects as fast and easily as possible](https://dev.to/koddr/github-action-for-release-your-go-projects-as-fast-and-easily-as-possible-20a2)
 
 {{ template:license }}
