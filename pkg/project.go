@@ -251,3 +251,7 @@ func RmFromDescription(path string, packageName string) (fail error) {
 
 	return fail
 }
+
+func UpgradeProjectPackage(projectPath string, packageName string) (fail error) {
+	return fail
+}
