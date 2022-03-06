@@ -206,7 +206,7 @@ func AddToDescription(path string, packageName string) (fail error) {
 		Revision: show.Revision,
 	})
 
-	fail = addPackageToDatabase(packageName)
+	fail = addPackageToDatabase(show)
 
 	if fail != nil {
 		return fmt.Errorf("%w;\nerror while adding '%s' package info to database", fail, packageName)
@@ -220,15 +220,13 @@ func AddToDescription(path string, packageName string) (fail error) {
 
 	fmt.Printf("read: %s\n", read)
 
-	read, fail = updatePackage(packageName)
+	fail = updatePackage(show)
 
 	if fail != nil {
 		return fmt.Errorf("%w;\nerror while updating '%s' package info from database", fail, packageName)
 	}
 
-	fmt.Printf("read: %s\n", read)
-
-	fail = rmPackage(packageName)
+	fail = rmPackage(show)
 
 	if fail != nil {
 		return fmt.Errorf("%w;\nerror while removing '%s' package info from database", fail, packageName)

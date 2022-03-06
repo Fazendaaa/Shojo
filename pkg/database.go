@@ -1,12 +1,14 @@
 package shojo
 
 import (
+	"bytes"
+	"encoding/gob"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/dgraph-io/badger/v3"
-	"gopkg.in/yaml.v3"
 )
 
 func fetchDataBase() (database *badger.DB, fail error) {
@@ -42,37 +44,61 @@ func fetchDataBase() (database *badger.DB, fail error) {
 	return database, fail
 }
 
-func addPackageToDatabase(packageName string) (fail error) {
+// encodeToBytes https://gist.github.com/SteveBate/042960baa7a4795c3565#file-struct_to_bytes-go-L29
+func encodeToBytes(p interface{}) []byte {
+	buf := bytes.Buffer{}
+	enc := gob.NewEncoder(&buf)
+	err := enc.Encode(p)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("uncompressed size (bytes): ", len(buf.Bytes()))
+	return buf.Bytes()
+}
+
+// bytesToShow https://gist.github.com/SteveBate/042960baa7a4795c3565#file-struct_to_bytes-go-L29
+func bytesToShow(input []byte) (show Show, fail error) {
+	dec := gob.NewDecoder(bytes.NewReader(input))
+	fail = dec.Decode(&show)
+
+	if nil != fail {
+		return show, fmt.Errorf("%w;\nerror while converting information stored in database to shojo", fail)
+	}
+
+	return show, fail
+}
+
+func addPackageToDatabase(show Show) (fail error) {
 	database, fail := fetchDataBase()
 
 	if nil != fail {
-		return fmt.Errorf("%w;\nerror fecthing shojo's database to add '%s' package", fail, packageName)
+		return fmt.Errorf("%w;\nerror fecthing shojo's database to add '%s' package", fail, show.Package)
 	}
 
 	defer database.Close()
 
 	fail = database.Update(func(transaction *badger.Txn) (fail error) {
-		fail = transaction.Set([]byte(packageName), []byte("42"))
+		fail = transaction.Set([]byte(show.Package), encodeToBytes(show))
 
 		if nil != fail {
-			return fmt.Errorf("%w;\nerror adding '%s' package entry to database", fail, packageName)
+			return fmt.Errorf("%w;\nerror adding '%s' package entry to database", fail, show.Package)
 		}
 
 		return fail
 	})
 
 	if nil != fail {
-		return fmt.Errorf("%w;\nerror while finishing up shojo's database after adding '%s' package info to it", fail, packageName)
+		return fmt.Errorf("%w;\nerror while finishing up shojo's database after adding '%s' package info to it", fail, show.Package)
 	}
 
 	return fail
 }
 
-func readPackage(packageName string) (packageInfo Package, fail error) {
+func readPackage(packageName string) (show Show, fail error) {
 	database, fail := fetchDataBase()
 
 	if nil != fail {
-		return packageInfo, fmt.Errorf("%w;\nerror fecthing shojo's database to read '%s' package", fail, packageName)
+		return show, fmt.Errorf("%w;\nerror fecthing shojo's database to read '%s' package", fail, packageName)
 	}
 
 	var valueCopy []byte
@@ -96,23 +122,17 @@ func readPackage(packageName string) (packageInfo Package, fail error) {
 	})
 
 	if nil != fail {
-		return packageInfo, fmt.Errorf("%w;\nerror updating database after fetching '%s' package data from it", fail, packageName)
+		return show, fmt.Errorf("%w;\nerror updating database after fetching '%s' package data from it", fail, show.Package)
 	}
 
-	fail = yaml.Unmarshal(valueCopy, &valueCopy)
-
-	if nil != fail {
-		return packageInfo, fmt.Errorf("%w;\nerror updating database after fetching '%s' package data from it", fail, packageName)
-	}
-
-	return packageInfo, fail
+	return bytesToShow(valueCopy)
 }
 
-func updatePackage(packageName string) (packageInfo Package, fail error) {
+func updatePackage(show Show) (fail error) {
 	database, fail := fetchDataBase()
 
 	if nil != fail {
-		return packageInfo, fmt.Errorf("%w;\nerror fecthing shojo's database to update '%s' package", fail, packageName)
+		return fmt.Errorf("%w;\nerror fecthing shojo's database to update '%s' package", fail, show.Package)
 	}
 
 	var valueCopy []byte
@@ -130,19 +150,19 @@ func updatePackage(packageName string) (packageInfo Package, fail error) {
 	})
 
 	if nil != fail {
-		return packageInfo, fail
+		return fail
 	}
 
 	fmt.Println("rm package: %s", valueCopy)
 
-	return packageInfo, fail
+	return fail
 }
 
-func rmPackage(packageName string) (fail error) {
+func rmPackage(show Show) (fail error) {
 	database, fail := fetchDataBase()
 
 	if nil != fail {
-		return fmt.Errorf("%w;\nerror fecthing shojo's database to remove '%s' package", fail, packageName)
+		return fmt.Errorf("%w;\nerror fecthing shojo's database to remove '%s' package", fail, show.Package)
 	}
 
 	defer database.Close()
