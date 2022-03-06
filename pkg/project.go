@@ -202,9 +202,37 @@ func AddToDescription(path string, packageName string) (fail error) {
 	}
 
 	project.Packages = append(project.Packages, Package{
-		Name:     packageName,
+		Name:     show.Package,
 		Revision: show.Revision,
 	})
+
+	fail = addPackageToDatabase(packageName)
+
+	if fail != nil {
+		return fmt.Errorf("%w;\nerror while adding '%s' package info to database", fail, packageName)
+	}
+
+	read, fail := readPackage(packageName)
+
+	if fail != nil {
+		return fmt.Errorf("%w;\nerror while reading '%s' package info from database", fail, packageName)
+	}
+
+	fmt.Printf("read: %s\n", read)
+
+	read, fail = updatePackage(packageName)
+
+	if fail != nil {
+		return fmt.Errorf("%w;\nerror while updating '%s' package info from database", fail, packageName)
+	}
+
+	fmt.Printf("read: %s\n", read)
+
+	fail = rmPackage(packageName)
+
+	if fail != nil {
+		return fmt.Errorf("%w;\nerror while removing '%s' package info from database", fail, packageName)
+	}
 
 	return writeToProject(project)
 }
