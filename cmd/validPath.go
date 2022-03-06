@@ -10,7 +10,7 @@ import (
 func checkPath(path string) error {
 	dir, fail := os.Stat(path)
 
-	if fail != nil {
+	if nil != fail {
 		return fmt.Errorf(`invalid path: %s
 	given error: %q`, path, fail)
 	}

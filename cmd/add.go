@@ -22,7 +22,15 @@ var addCmd = &cobra.Command{
 			return
 		}
 
-		resultChannel := controllers.AddPackages(params, projectPath)
+		resultChannel, fail := controllers.AddPackages(params, projectPath)
+
+		if nil != fail {
+			fmt.Println()
+			fmt.Println(fail)
+
+			return
+		}
+
 		fail = consumeChannel(params, "installing", spinner, resultChannel)
 
 		if nil != fail {

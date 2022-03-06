@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"io/ioutil"
 
+	"github.com/dgraph-io/badger/v3"
 	"gopkg.in/yaml.v3"
 )
 
 type Project struct {
+	database   *badger.DB
 	filename   string
 	Tex        Tex        `yaml:"tex"`
 	TLMGR      TLMGR      `yaml:"tlmgr"`
@@ -67,7 +69,7 @@ type GenericRepository interface {
 func writeToProject(data GenericRepository) (fail error) {
 	yamlData, fail := yaml.Marshal(&data)
 
-	if fail != nil {
+	if nil != fail {
 		return fmt.Errorf("%w;\nerror while parsing data to be saved into project file", fail)
 	}
 
@@ -78,11 +80,15 @@ func writeToProject(data GenericRepository) (fail error) {
 
 	fail = ioutil.WriteFile(data.getFilename(), buffer.Bytes(), 0644)
 
-	if fail != nil {
+	if nil != fail {
 		return fmt.Errorf("%w;\nerror to write data into the file", fail)
 	}
 
 	return fail
+}
+
+func (project *Project) writeProject() (fail error) {
+	return writeToProject(project)
 }
 
 func CreateProject(projectPath string) (fail error) {
@@ -136,21 +142,15 @@ func CreateProject(projectPath string) (fail error) {
 	return writeToProject(data)
 }
 
-func InstallProject(path string) (fail error) {
-	project, fail := load(path)
-
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while reading file from: %s", fail, path)
-	}
-
+func (project *Project) InstallProject() (fail error) {
 	if 0 == len(project.Packages) {
-		return fmt.Errorf("no packages to install listed in shojo's config in: %s", path)
+		return fmt.Errorf("no packages to install listed in shojo's config in: %s", project.filename)
 	}
 
 	for _, toInstall := range project.Packages {
 		installed, fail := isInstalled(toInstall.Name)
 
-		if fail != nil {
+		if nil != fail {
 			return fmt.Errorf(`%w;
 error while checking whether or not '%s' package is installed;`, fail, toInstall.Name)
 		}
@@ -158,7 +158,7 @@ error while checking whether or not '%s' package is installed;`, fail, toInstall
 		if !installed {
 			result, fail := installPackage(toInstall.Name)
 
-			if fail != nil {
+			if nil != fail {
 				return fmt.Errorf(`%s;
 %w;
 error while installing '%s' package;`, result, fail, toInstall.Name)
@@ -169,36 +169,33 @@ error while installing '%s' package;`, result, fail, toInstall.Name)
 	return fail
 }
 
-func AddToProject(path string, packageName string) (result string, fail error) {
-	project, fail := load(path)
-
-	if fail != nil {
-		return result, fmt.Errorf("%w;\nerror while reading file from: %s", fail, path)
-	}
-	if isPackagePresent(project, packageName) {
-		return result, fmt.Errorf("package '%s' already present in project", packageName)
+func (project *Project) AddToProject(packageName string) (fail error) {
+	if project.isPackagePresent(packageName) {
+		return fmt.Errorf("package '%s' already present in project", packageName)
 	}
 
-	result, fail = installPackage(packageName)
+	show, fail := project.readPackage(packageName)
 
-	if fail != nil {
-		return result, fmt.Errorf("%w;\nerror while installing '%s' package", fail, path)
-	}
+	if nil != fail {
+		result, fail := installPackage(packageName)
 
-	return result, fail
-}
+		if nil != fail {
+			return fmt.Errorf(`%w;
+error while installing '%s' package;
+due to: %s`, fail, packageName, result)
+		}
 
-func AddToDescription(path string, packageName string) (fail error) {
-	project, fail := load(path)
+		show, fail = packageShow(packageName)
 
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while reading file from: %s", fail, path)
-	}
+		if nil != fail {
+			return fmt.Errorf("%w;\nerror while fetching info from '%s' installed package", fail, packageName)
+		}
 
-	show, fail := packageShow(packageName)
+		fail = project.addPackageToDatabase(show)
 
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while fetching information about installed '%s' package", fail, path)
+		if nil != fail {
+			return fmt.Errorf("%w;\nerror while adding '%s' package info to database", fail, packageName)
+		}
 	}
 
 	project.Packages = append(project.Packages, Package{
@@ -206,78 +203,55 @@ func AddToDescription(path string, packageName string) (fail error) {
 		Revision: show.Revision,
 	})
 
-	fail = addPackageToDatabase(show)
-
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while adding '%s' package info to database", fail, packageName)
-	}
-
-	read, fail := readPackage(packageName)
-
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while reading '%s' package info from database", fail, packageName)
-	}
-
-	fmt.Printf("read: %s\n", read)
-
-	fail = updatePackage(show)
-
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while updating '%s' package info from database", fail, packageName)
-	}
-
-	fail = rmPackage(show)
-
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while removing '%s' package info from database", fail, packageName)
-	}
-
-	return writeToProject(project)
+	return project.writeProject()
 }
 
-func RmFromProject(path string, packageName string, uninstall bool) (result string, fail error) {
-	project, fail := load(path)
-
-	if fail != nil {
-		return result, fmt.Errorf("%w;\nerror while reading file from: %s", fail, path)
-	}
-	if !isPackagePresent(project, packageName) {
-		return result, fmt.Errorf("package '%s' not present in project", packageName)
+func (project *Project) RmFromProject(packageName string, uninstall bool) (fail error) {
+	if !project.isPackagePresent(packageName) {
+		return fmt.Errorf("package '%s' not present in project", packageName)
 	}
 
 	if uninstall {
-		result, fail = uninstallPackage(packageName)
+		result, fail := uninstallPackage(packageName)
 
-		if fail != nil {
-			return result, fmt.Errorf("%w;\nerror while uninstalling '%s' package", fail, path)
+		if nil != fail {
+			return fmt.Errorf(`%w;
+error while uninstalling '%s' package;
+due to: %s`, fail, packageName, result)
+		}
+
+		fail = project.rmPackage(Show{Package: packageName})
+
+		if nil != fail {
+			return fmt.Errorf("%w;\nerror while removing '%s' package from database", fail, packageName)
 		}
 	}
 
-	return result, fail
+	fail = project.removePackage(packageName)
+
+	if nil != fail {
+		return fmt.Errorf("%w;\nerror while removing '%s' package", fail, packageName)
+	}
+
+	return project.writeProject()
 }
 
-func RmFromDescription(path string, packageName string) (fail error) {
-	project, fail := load(path)
-
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while reading file from: %s", fail, path)
-	}
-
-	fail = removePackage(&project, packageName)
-
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while removing '%s' package", fail, path)
-	}
-
-	fail = writeToProject(project)
-
-	if fail != nil {
-		return fmt.Errorf("%w;\nerror while updating project file after removing '%s' package", fail, path)
-	}
-
+func (project *Project) UpgradeProjectPackage(projectPath string, packageName string) (fail error) {
 	return fail
 }
 
-func UpgradeProjectPackage(projectPath string, packageName string) (fail error) {
-	return fail
+func ReadProject(projectPath string) (project Project, fail error) {
+	project, fail = load(projectPath)
+
+	if nil != fail {
+		return project, fmt.Errorf("%w;\nerror while reading file from: %s", fail, projectPath)
+	}
+
+	fail = project.fetchDataBase()
+
+	if nil != fail {
+		return project, fmt.Errorf("%w;\nerror while reading Shojo's database: %s", fail, projectPath)
+	}
+
+	return project, fail
 }

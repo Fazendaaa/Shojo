@@ -4,56 +4,23 @@ import (
 	"bytes"
 	"encoding/gob"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/dgraph-io/badger/v3"
 )
 
-func fetchDataBase() (database *badger.DB, fail error) {
-	dirname, fail := os.UserHomeDir()
-
-	if fail != nil {
-		return database, fmt.Errorf("%w;\nerror while reading user folder to init shojo's database directory", fail)
-	}
-
-	databasePath := filepath.Join(dirname, ".shojo")
-
-	if _, fail = os.Stat(databasePath); nil != fail {
-		fail = os.MkdirAll(databasePath, os.ModePerm)
-	}
+// encodeToBytes https://gist.github.com/SteveBate/042960baa7a4795c3565#file-struct_to_bytes-go-L29
+func encodeToBytes(p interface{}) (tmp []byte, fail error) {
+	buffer := bytes.Buffer{}
+	enc := gob.NewEncoder(&buffer)
+	fail = enc.Encode(p)
 
 	if nil != fail {
-		return database, fmt.Errorf("%w;\nerror while creating shojo's database directory", fail)
+		return tmp, fmt.Errorf("%w\n;error while encoded data to database", fail)
 	}
 
-	options := badger.DefaultOptions(databasePath)
-	IsModeDebug := true
-
-	if IsModeDebug {
-		options.Logger = nil
-	}
-
-	database, fail = badger.Open(options)
-
-	if fail != nil {
-		return database, fmt.Errorf("%w;\nerror while opening shojo's database", fail)
-	}
-
-	return database, fail
-}
-
-// encodeToBytes https://gist.github.com/SteveBate/042960baa7a4795c3565#file-struct_to_bytes-go-L29
-func encodeToBytes(p interface{}) []byte {
-	buf := bytes.Buffer{}
-	enc := gob.NewEncoder(&buf)
-	err := enc.Encode(p)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("uncompressed size (bytes): ", len(buf.Bytes()))
-	return buf.Bytes()
+	return buffer.Bytes(), fail
 }
 
 // bytesToShow https://gist.github.com/SteveBate/042960baa7a4795c3565#file-struct_to_bytes-go-L29
@@ -68,17 +35,50 @@ func bytesToShow(input []byte) (show Show, fail error) {
 	return show, fail
 }
 
-func addPackageToDatabase(show Show) (fail error) {
-	database, fail := fetchDataBase()
+func (project *Project) fetchDataBase() (fail error) {
+	dirname, fail := os.UserHomeDir()
 
 	if nil != fail {
-		return fmt.Errorf("%w;\nerror fecthing shojo's database to add '%s' package", fail, show.Package)
+		return fmt.Errorf("%w;\nerror while reading user folder to init shojo's database directory", fail)
 	}
 
-	defer database.Close()
+	databasePath := filepath.Join(dirname, ".shojo")
 
-	fail = database.Update(func(transaction *badger.Txn) (fail error) {
-		fail = transaction.Set([]byte(show.Package), encodeToBytes(show))
+	if _, fail = os.Stat(databasePath); nil != fail {
+		fail = os.MkdirAll(databasePath, os.ModePerm)
+	}
+
+	if nil != fail {
+		return fmt.Errorf("%w;\nerror while creating shojo's database directory", fail)
+	}
+
+	options := badger.DefaultOptions(databasePath)
+	IsModeDebug := true
+
+	if IsModeDebug {
+		options.Logger = nil
+	}
+
+	project.database, fail = badger.Open(options)
+
+	if nil != fail {
+		return fmt.Errorf("%w;\nerror while opening shojo's database", fail)
+	}
+
+	return fail
+}
+
+func (project *Project) addPackageToDatabase(show Show) (fail error) {
+	data, fail := encodeToBytes(show)
+
+	if nil != fail {
+		return fmt.Errorf("%w;\nerror while generating shojo's database to add '%s' package", fail, show.Package)
+	}
+
+	defer project.database.Close()
+
+	fail = project.database.Update(func(transaction *badger.Txn) (fail error) {
+		fail = transaction.Set([]byte(show.Package), data)
 
 		if nil != fail {
 			return fmt.Errorf("%w;\nerror adding '%s' package entry to database", fail, show.Package)
@@ -94,18 +94,12 @@ func addPackageToDatabase(show Show) (fail error) {
 	return fail
 }
 
-func readPackage(packageName string) (show Show, fail error) {
-	database, fail := fetchDataBase()
-
-	if nil != fail {
-		return show, fmt.Errorf("%w;\nerror fecthing shojo's database to read '%s' package", fail, packageName)
-	}
-
+func (project *Project) readPackage(packageName string) (show Show, fail error) {
 	var valueCopy []byte
 
-	defer database.Close()
+	defer project.database.Close()
 
-	fail = database.View(func(transaction *badger.Txn) (fail error) {
+	fail = project.database.View(func(transaction *badger.Txn) (fail error) {
 		item, fail := transaction.Get([]byte(packageName))
 
 		if nil != fail {
@@ -128,51 +122,47 @@ func readPackage(packageName string) (show Show, fail error) {
 	return bytesToShow(valueCopy)
 }
 
-func updatePackage(show Show) (fail error) {
-	database, fail := fetchDataBase()
+func (project *Project) updatePackage(show Show) (fail error) {
+	data, fail := encodeToBytes(show)
 
 	if nil != fail {
-		return fmt.Errorf("%w;\nerror fecthing shojo's database to update '%s' package", fail, show.Package)
+		return fmt.Errorf("%w;\nerror while generating shojo's database to update '%s' package", fail, show.Package)
 	}
 
-	var valueCopy []byte
+	defer project.database.Close()
 
-	defer database.Close()
-
-	fail = database.Update(func(transaction *badger.Txn) (fail error) {
-		fail = transaction.Set([]byte("answer"), []byte("24"))
+	fail = project.database.Update(func(transaction *badger.Txn) (fail error) {
+		fail = transaction.Set([]byte(show.Package), data)
 
 		if nil != fail {
-			return fail
+			return fmt.Errorf("%w;\nerror updating '%s' package entry from database", fail, show.Package)
 		}
 
 		return fail
 	})
 
 	if nil != fail {
-		return fail
+		return fmt.Errorf("%w;\nerror after finishing up database after updating '%s' package", fail, show.Package)
 	}
-
-	fmt.Println("rm package: %s", valueCopy)
 
 	return fail
 }
 
-func rmPackage(show Show) (fail error) {
-	database, fail := fetchDataBase()
+func (project *Project) rmPackage(show Show) (fail error) {
+	defer project.database.Close()
 
-	if nil != fail {
-		return fmt.Errorf("%w;\nerror fecthing shojo's database to remove '%s' package", fail, show.Package)
-	}
+	fail = project.database.Update(func(transaction *badger.Txn) error {
+		fail = transaction.Delete([]byte(show.Package))
 
-	defer database.Close()
+		if nil != fail {
+			return fmt.Errorf("%w;\nerror removing '%s' package entry from database", fail, show.Package)
+		}
 
-	fail = database.Update(func(transaction *badger.Txn) error {
-		return transaction.Delete([]byte("answer"))
+		return fail
 	})
 
 	if nil != fail {
-		return fail
+		return fmt.Errorf("%w;\nerror after finishing up database after removing '%s' package", fail, show.Package)
 	}
 
 	return fail

@@ -1,7 +1,7 @@
 package controllers
 
-func UpgradePackages(projectPath string) chan PackageResponse {
-	resultChannel := make(chan PackageResponse)
+func UpgradePackages(projectPath string) (resultChannel chan PackageResponse, fail error) {
+	resultChannel = make(chan PackageResponse)
 
-	return resultChannel
+	return resultChannel, fail
 }

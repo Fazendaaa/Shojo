@@ -22,7 +22,15 @@ var upgradeCmd = &cobra.Command{
 			return
 		}
 
-		resultChannel := controllers.UpgradePackages(projectPath)
+		resultChannel, fail := controllers.UpgradePackages(projectPath)
+
+		if nil != fail {
+			fmt.Println()
+			fmt.Println(fail)
+
+			return
+		}
+
 		fail = consumeChannel(params, "upgrading", spinner, resultChannel)
 
 		if nil != fail {
