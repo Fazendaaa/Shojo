@@ -75,20 +75,20 @@ func (project *Project) addPackageToDatabase(show Show) (fail error) {
 		return fmt.Errorf("%w;\nerror while generating shojo's database to add '%s' package", fail, show.Package)
 	}
 
-	defer project.database.Close()
+	transaction := project.database.NewTransaction(true)
 
-	fail = project.database.Update(func(transaction *badger.Txn) (fail error) {
-		fail = transaction.Set([]byte(show.Package), data)
+	defer transaction.Discard()
 
-		if nil != fail {
-			return fmt.Errorf("%w;\nerror adding '%s' package entry to database", fail, show.Package)
-		}
-
-		return fail
-	})
+	fail = transaction.Set([]byte(show.Package), data)
 
 	if nil != fail {
-		return fmt.Errorf("%w;\nerror while finishing up shojo's database after adding '%s' package info to it", fail, show.Package)
+		return fmt.Errorf("%w;\nerror adding '%s' package entry to database", fail, show.Package)
+	}
+
+	fail = transaction.Commit()
+
+	if nil != fail {
+		return fmt.Errorf("%w;\nerror after adding '%s' package entry to database", fail, show.Package)
 	}
 
 	return fail
@@ -96,27 +96,20 @@ func (project *Project) addPackageToDatabase(show Show) (fail error) {
 
 func (project *Project) readPackage(packageName string) (show Show, fail error) {
 	var valueCopy []byte
+	transaction := project.database.NewTransaction(false)
 
-	defer project.database.Close()
+	defer transaction.Discard()
 
-	fail = project.database.View(func(transaction *badger.Txn) (fail error) {
-		item, fail := transaction.Get([]byte(packageName))
-
-		if nil != fail {
-			return fmt.Errorf("%w;\nerror fetching '%s' package entry from database", fail, packageName)
-		}
-
-		valueCopy, fail = item.ValueCopy(nil)
-
-		if nil != fail {
-			return fmt.Errorf("%w;\nerror fetching '%s' package data from database", fail, packageName)
-		}
-
-		return fail
-	})
+	item, fail := transaction.Get([]byte(packageName))
 
 	if nil != fail {
-		return show, fmt.Errorf("%w;\nerror updating database after fetching '%s' package data from it", fail, show.Package)
+		return show, fmt.Errorf("%w;\nerror fetching '%s' package entry from database", fail, packageName)
+	}
+
+	valueCopy, fail = item.ValueCopy(nil)
+
+	if nil != fail {
+		return show, fmt.Errorf("%w;\nerror fetching '%s' package data from database", fail, packageName)
 	}
 
 	return bytesToShow(valueCopy)
@@ -129,20 +122,20 @@ func (project *Project) updatePackage(show Show) (fail error) {
 		return fmt.Errorf("%w;\nerror while generating shojo's database to update '%s' package", fail, show.Package)
 	}
 
-	defer project.database.Close()
+	transaction := project.database.NewTransaction(true)
 
-	fail = project.database.Update(func(transaction *badger.Txn) (fail error) {
-		fail = transaction.Set([]byte(show.Package), data)
+	defer transaction.Discard()
 
-		if nil != fail {
-			return fmt.Errorf("%w;\nerror updating '%s' package entry from database", fail, show.Package)
-		}
-
-		return fail
-	})
+	fail = transaction.Set([]byte(show.Package), data)
 
 	if nil != fail {
-		return fmt.Errorf("%w;\nerror after finishing up database after updating '%s' package", fail, show.Package)
+		return fmt.Errorf("%w;\nerror updating '%s' package entry to database", fail, show.Package)
+	}
+
+	fail = transaction.Commit()
+
+	if nil != fail {
+		return fmt.Errorf("%w;\nerror after updating '%s' package entry to database", fail, show.Package)
 	}
 
 	return fail
@@ -151,18 +144,20 @@ func (project *Project) updatePackage(show Show) (fail error) {
 func (project *Project) rmPackage(show Show) (fail error) {
 	defer project.database.Close()
 
-	fail = project.database.Update(func(transaction *badger.Txn) error {
-		fail = transaction.Delete([]byte(show.Package))
+	transaction := project.database.NewTransaction(true)
 
-		if nil != fail {
-			return fmt.Errorf("%w;\nerror removing '%s' package entry from database", fail, show.Package)
-		}
+	defer transaction.Discard()
 
-		return fail
-	})
+	fail = transaction.Delete([]byte(show.Package))
 
 	if nil != fail {
-		return fmt.Errorf("%w;\nerror after finishing up database after removing '%s' package", fail, show.Package)
+		return fmt.Errorf("%w;\nerror removing '%s' package entry to database", fail, show.Package)
+	}
+
+	fail = transaction.Commit()
+
+	if nil != fail {
+		return fmt.Errorf("%w;\nerror after removing '%s' package entry to database", fail, show.Package)
 	}
 
 	return fail
