@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"sync"
 
 	"github.com/dgraph-io/badger/v3"
 	"gopkg.in/yaml.v3"
@@ -66,6 +67,8 @@ type GenericRepository interface {
 	getFilename() string
 }
 
+var mutex sync.Mutex
+
 func writeToProject(data GenericRepository) (fail error) {
 	yamlData, fail := yaml.Marshal(&data)
 
@@ -77,6 +80,9 @@ func writeToProject(data GenericRepository) (fail error) {
 	yamlEncoder := yaml.NewEncoder(buffer)
 
 	yamlEncoder.SetIndent(2)
+
+	mutex.Lock()
+	defer mutex.Unlock()
 
 	fail = ioutil.WriteFile(data.getFilename(), buffer.Bytes(), 0644)
 
@@ -166,7 +172,7 @@ error while installing '%s' package;`, result, fail, toInstall.Name)
 		}
 	}
 
-	return fail
+	return project.writeProject()
 }
 
 func (project *Project) AddToProject(packageName string) (fail error) {
@@ -233,7 +239,7 @@ due to: %s`, fail, packageName, result)
 		return fmt.Errorf("%w;\nerror while removing '%s' package", fail, packageName)
 	}
 
-	return project.writeProject()
+	return fail
 }
 
 func (project *Project) UpgradeProjectPackage(projectPath string, packageName string) (fail error) {
