@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var projectPath string
+
 func checkPath(path string) error {
 	dir, fail := os.Stat(path)
 
