@@ -108,6 +108,18 @@ shojo repo https://mirror.ctan.org/systems/texlive/tlnet
 
 ## Installing
 
+### Arch Linux/Manjaro
+
+```shell
+yay -S shojo
+```
+
+or:
+
+```shell
+pamac install shojo
+```
+
 ### Go
 
 ```shell
