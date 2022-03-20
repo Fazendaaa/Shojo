@@ -1,6 +1,6 @@
 # Maintainer: Lucas de Almeida Carotta <lucas.carotta@outlook.com>
 pkgname=shojo
-pkgver=0.0.3-21-g7ba9d00
+pkgver=0.0.3
 pkgrel=1
 epoch=
 pkgdesc="Shojo is a CLI LaTex package manager"

@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
       -
         name: Update AUR version
-        run: sed -i "s/pkgver=.*/pkgver=$(git describe --tags)/g" PKGBUILD
+        run: sed -i "s/pkgver=.*/pkgver=$(git describe --tags | cut -d '-' -f 1)/g" PKGBUILD
       -
         name: Commit files
         run: |
