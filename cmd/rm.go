@@ -24,7 +24,15 @@ var (
 				return
 			}
 
-			resultChannel := controllers.RmPackages(params, projectPath, uninstall)
+			resultChannel, fail := controllers.RmPackages(params, projectPath, uninstall)
+
+			if nil != fail {
+				fmt.Println()
+				fmt.Println(fail)
+
+				return
+			}
+
 			fail = consumeChannel(params, "removing", spinner, resultChannel)
 
 			if nil != fail {

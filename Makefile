@@ -1,3 +1,8 @@
+all: build
+
+build:
+	@go build -o shojo
+
 build-docs:
 	@docker buildx build \
 		--file docs/Dockerfile \
@@ -24,3 +29,6 @@ builds:
 		--platform linux/amd64 \
 		--load --tag shojo-latex \
 		.
+
+check:
+	@go test ./...

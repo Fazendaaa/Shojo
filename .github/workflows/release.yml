@@ -6,10 +6,35 @@ on:
       - "*"
 
 jobs:
+  pkgbuild:
+    name: Update PKGBUILD
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      -
+        name: Update AUR version
+        run: |
+          sed -i "s/pkgver=.*/pkgver=$(git describe --tags | cut -d '-' -f 1)/g" PKGBUILD
+          makepkg --printsrcinfo > .SRCINFO
+      -
+        name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Add changes" -a
+      -
+        name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
   build:
     name: GoReleaser build
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2

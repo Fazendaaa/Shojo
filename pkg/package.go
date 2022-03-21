@@ -10,7 +10,7 @@ func remove(slice []Package, s int) (_ []Package) {
 	return append(slice[:s], slice[s+1:]...)
 }
 
-func isPackagePresent(project Project, packageName string) (present bool) {
+func (project *Project) isPackagePresent(packageName string) (present bool) {
 	for _, toCheck := range project.Packages {
 		if toCheck.Name == packageName {
 			return true
@@ -20,7 +20,7 @@ func isPackagePresent(project Project, packageName string) (present bool) {
 	return false
 }
 
-func removePackage(project *Project, packageName string) (fail error) {
+func (project *Project) removePackage(packageName string) (fail error) {
 	toRemove := -1
 
 	for index, toCheck := range project.Packages {
