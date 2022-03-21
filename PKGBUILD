@@ -1,5 +1,5 @@
 # Maintainer: Lucas de Almeida Carotta <lucas.carotta@outlook.com>
-pkgname=shojo
+pkgname=shojo-git
 pkgver=0.0.3
 pkgrel=1
 epoch=
