@@ -18,7 +18,7 @@ jobs:
         name: Update AUR version
         run: |
           sed -i "s/pkgver=.*/pkgver=$(git describe --tags | cut -d '-' -f 1)/g" PKGBUILD
-          makepkg --printsrcinfo > .SRCINFO
+          sed -i "s/pkgver\s*=.*/pkgver = $(git describe --tags | cut -d '-' -f 1)/g" .SRCINFO
       -
         name: Commit files
         run: |
