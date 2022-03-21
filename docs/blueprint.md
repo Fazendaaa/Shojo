@@ -108,6 +108,18 @@ shojo repo https://mirror.ctan.org/systems/texlive/tlnet
 
 ## Installing
 
+### Arch Linux/Manjaro
+
+```shell
+yay -S shojo
+```
+
+or:
+
+```shell
+pamac install shojo
+```
+
 ### Go
 
 ```shell
@@ -178,7 +190,7 @@ docker rmi --force fazenda/shojo-latex
 
 ## CFD
 
-As `estat` have grown so much and making it available as FOSS (Free and open-source software) was always the idea but the project still in development and not having a properly defined scope, I decided to break its main features in other projects:
+As `estat` have grown so much and making it available as FOSS (Free and open-source software) trough the [CFD](https://github.com/Fazendaaa/CFD) initiative. That's was always the idea but the project still in development and not having a properly defined scope, I decided to break its main features in other projects:
 
 - [Succubus](https://github.com/Fazendaaa/Succubus): universal package manager based on cloud-native
 - [Jinn](https://github.com/Fazendaaa/Jinn): universal project manager built to expand Succubus capabilities

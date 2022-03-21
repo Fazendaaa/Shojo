@@ -6,37 +6,23 @@ import (
 	shojo "github.com/Fazendaaa/Shojo/pkg"
 )
 
-func rmFromProject(packageName string, path string) (fail error) {
-	mutex.Lock()
-	defer mutex.Unlock()
-
-	return shojo.RmFromDescription(path, packageName)
-}
-
-func mPackage(packageName string, path string, uninstall bool) (fail error) {
-	result, fail := shojo.RmFromProject(path, packageName, uninstall)
+func RmPackages(packages []string, projectPath string, uninstall bool) (resultChannel chan PackageResponse, fail error) {
+	project, fail := shojo.ReadProject(projectPath)
 
 	if nil != fail {
-		return fmt.Errorf(`%v;
-error while removing package '%s';
-halted execution due to:
-%s`, fail, packageName, result)
+		return resultChannel, fmt.Errorf("%w;\nerror while reading project file", fail)
 	}
 
-	return rmFromProject(packageName, path)
-}
-
-func RmPackages(packages []string, projectPath string, uninstall bool) chan PackageResponse {
-	resultChannel := make(chan PackageResponse)
+	resultChannel = make(chan PackageResponse)
 
 	for _, packageName := range packages {
 		go func(name string) {
 			resultChannel <- PackageResponse{
 				PackageName: name,
-				Response:    mPackage(name, projectPath, uninstall),
+				Response:    project.RmFromProject(name, uninstall),
 			}
 		}(packageName)
 	}
 
-	return resultChannel
+	return resultChannel, fail
 }
