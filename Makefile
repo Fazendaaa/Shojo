@@ -3,6 +3,9 @@ all: build
 build:
 	@go build -o shojo
 
+install:
+	@cp shojo ${DESTDIR}
+
 build-docs:
 	@docker buildx build \
 		--file docs/Dockerfile \

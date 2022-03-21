@@ -26,13 +26,12 @@ validpgpkeys=()
 
 build() {
 	cd Shojo
-	make build
+	make
 }
 
 check() {
 	cd Shojo
 	make -k check
-	cp shojo /usr/local/bin/shojo
 }
 
 package() {
