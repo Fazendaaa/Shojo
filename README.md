@@ -203,6 +203,13 @@ shojo add lastpage
 
 ## ➤ Uninstalling
 
+### Arch Linux/Manjaro
+
+
+```shell
+yay -R shojo
+```
+
 ### Go
 
 ```shell
